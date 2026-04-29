@@ -1,7 +1,14 @@
 import ProjectCard from "../components/ProjectCard";
 
+interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  techStack: string[];
+}
+
 // This function runs on the server
-async function getProjects() {
+async function getProjects(): Promise<Project[]> {
   // We call our own API endpoint
   // Use absolute URL for server-side fetching in Next.js
   const res = await fetch(
@@ -36,7 +43,7 @@ export default async function Home() {
         <h2 className="text-3xl font-bold mb-10">Featured Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.length > 0 ? (
-            projects.map((project: any) => (
+            projects.map((project: Project) => (
               <ProjectCard
                 key={project._id}
                 title={project.title}
