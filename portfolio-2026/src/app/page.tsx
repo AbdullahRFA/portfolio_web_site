@@ -1,6 +1,7 @@
 import ProjectCard from "../components/ProjectCard";
 // src/app/page.tsx
 import AboutSection from '../components/AboutSection'; // <-- Import the section
+import SkillsBento from '../components/SkillsBento'; // <-- Import the new module
 interface Project {
   _id: string;
   title: string;
@@ -57,6 +58,9 @@ export default async function Home() {
           )}
         </div>
       </section>
+
+      {/* Skills Bento Grid Module */}
+      <SkillsBento />
 
       {/* About & Experience Section */}
       <AboutSection /> 

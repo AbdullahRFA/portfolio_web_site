@@ -96,3 +96,18 @@ Answer: Maintainability and data separation. It keeps the presentation layer sep
 Explain the structural layout choice of grid-cols-1 lg:grid-cols-3.
 
 Answer: This is Tailwind's Mobile-First Responsive Web Design (RWD) approach. By default (grid-cols-1), everything stacks vertically inside one column, which fits perfectly on mobile screens. The lg: prefix acts as a media-query breakpoint; when the screen resolution is large (desktop size), it snaps to a clean three-column side-by-side grid asset layout.
+
+
+
+What does auto-rows-[180px] accomplish in our grid wrapper container?
+
+Answer: This tells CSS Grid to enforce a strict explicit base-height rule. Every single implicit horizontal row track generated inside this layout grid will exactly match a structural height of 180px. This keeps all our bento boxes uniform regardless of device variance.
+
+
+How do md:col-span-2 and md:row-span-2 break up the traditional grid matrix?
+Answer: By default, items occupy a single cell ($1 \times 1$). col-span-2 forces that block container element to stretch wide across 2 coordinate columns, while row-span-2 forces it to stretch deep vertically across 2 full explicit row spaces ($2 \times 2$). This asymmetry creates the signature "Bento look."
+
+
+Why use backdrop-blur-sm along with opacity colors like bg-white/80 for the background elements?
+
+Answer: This leverages advanced modern CSS filters to produce a premium "glassmorphism" visual style. It softly blurs any background gradient hues bleeding through beneath the element panel layer, providing better text contrast and professional depth.
