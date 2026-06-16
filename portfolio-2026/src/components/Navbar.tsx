@@ -1,23 +1,23 @@
 'use client'; // Required since we handle window scrolling, hooks, and observer states
 
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
-  // Added 'Home' target item configurations cleanly into our master navigation list
   const navLinks = [
     { label: 'Home', href: '#home' },
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Blog', href: '#blog' },
     { label: 'About', href: '#about' },
-    { label: 'Guestbook', href: '#guestbook' }, // <-- Added layout target link
+    { label: 'Guestbook', href: '#guestbook' },
     { label: 'Contact', href: '#contact' },
   ];
 
-  // 1. Intersection Observer logic to track scrolling positions asynchronously
+  // Intersection Observer logic to track scrolling positions asynchronously
   useEffect(() => {
     const observerOptions = {
       root: null, // Defaults to the browser viewport bounds frame
@@ -50,7 +50,7 @@ const Navbar = () => {
     };
   }, []);
 
-  // 2. Smooth scroll helper that maps active selection states instantly on user click triggers
+  // Smooth scroll helper that maps active selection states instantly on user click triggers
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false); // Close mobile tray navigation if open
@@ -60,57 +60,64 @@ const Navbar = () => {
 
     const targetElement = document.querySelector(href);
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-zinc-200/60 bg-white/80 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80 transition-all">
+    <nav className="sticky top-0 z-50 w-full border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md transition-all duration-300">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
         
-        {/* Brand Logo - Updated to trigger smooth scroll back to #home target structure */}
+        {/* Brand Logo - Video Matched Cyber Gradient Shadow */}
         <a 
           href="#home" 
           onClick={(e) => handleScroll(e, '#home')}
-          className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          className="text-lg font-black tracking-tight text-zinc-50 hover:text-cyan-400 transition-colors duration-300 group"
         >
-          AN<span className="text-blue-600">.</span>Sakib
+          AN<span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)] group-hover:text-fuchsia-400 transition-colors">.</span>Sakib
         </a>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => {
-            const linkId = link.href.replace('#', '');
-            const isActive = activeSection === linkId;
+        {/* Desktop Navigation Links with Sliding Pill Overlays */}
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex items-center gap-1.5 bg-zinc-900/60 p-1 rounded-xl border border-zinc-850">
+            {navLinks.map((link) => {
+              const linkId = link.href.replace('#', '');
+              const isActive = activeSection === linkId;
 
-            return (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleScroll(e, link.href)}
-                className={`text-sm font-medium transition-all relative py-1 ${
-                  isActive
-                    ? 'text-blue-600 dark:text-blue-400 font-semibold'
-                    : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
-                }`}
-              >
-                {link.label}
-                
-                {/* Active Underline Pill Link Highlight Animation */}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />
-                )}
-              </a>
-            );
-          })}
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleScroll(e, link.href)}
+                  className={`text-xs font-bold transition-all relative px-3 py-1.5 rounded-lg outline-none z-10 ${
+                    isActive
+                      ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <span className="relative z-20">{link.label}</span>
+                  
+                  {/* Video-Matched Smooth Sliding Active Pill HIGHLIGHT */}
+                  {isActive && (
+                    <motion.span 
+                      layoutId="activeNavbarTabPill"
+                      transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                      className="absolute inset-0 bg-zinc-800 border border-zinc-700/50 rounded-lg z-0" 
+                    />
+                  )}
+                </a>
+              );
+            })}
+          </div>
           
+          {/* Hire Me Interactive Button Link with Neon Shadow Ring */}
           <a
             href="#contact"
             onClick={(e) => handleScroll(e, '#contact')}
-            className={`text-xs font-semibold px-4 py-2 rounded-full transition-all shadow-sm ${
+            className={`text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full transition-all duration-300 transform hover:-translate-y-0.5 ${
               activeSection === 'contact'
-                ? 'bg-blue-600 text-white'
-                : 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-blue-600 dark:hover:bg-blue-500 dark:hover:text-white'
+                ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                : 'bg-zinc-900 border border-zinc-800 text-cyan-400 hover:text-white hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:border-transparent shadow-[0_0_15px_rgba(6,182,212,0.1)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)]'
             }`}
           >
             Hire Me
@@ -121,22 +128,23 @@ const Navbar = () => {
         <button
           onClick={() => setIsOpen(!isOpen)}
           type="button"
-          className="p-2 md:hidden text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+          className="p-2 md:hidden text-zinc-400 hover:text-cyan-400 border border-transparent hover:border-zinc-800 rounded-xl transition-all"
           aria-label="Toggle navigation menu"
         >
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             {isOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             )}
           </svg>
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown Tray */}
+      {/* Mobile Menu Dropdown Tray with Cyberpunk Design */}
       {isOpen && (
-        <div className="md:hidden border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-6 py-4 space-y-4 flex flex-col transition-all">
+        <div className="md:hidden border-b border-zinc-900 bg-zinc-950/95 backdrop-blur-lg px-6 py-5 space-y-3 flex flex-col transition-all shadow-2xl relative">
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-cyan-500 via-blue-500 to-fuchsia-500" />
           {navLinks.map((link) => {
             const linkId = link.href.replace('#', '');
             const isActive = activeSection === linkId;
@@ -146,10 +154,10 @@ const Navbar = () => {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleScroll(e, link.href)}
-                className={`text-sm font-medium py-1 rounded-lg px-2 transition-colors ${
+                className={`text-sm font-bold py-2 rounded-xl px-3 transition-all duration-200 ${
                   isActive
-                    ? 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 font-semibold'
-                    : 'text-zinc-600 dark:text-zinc-400'
+                    ? 'bg-zinc-900 border border-zinc-800 text-cyan-400 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]'
+                    : 'text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-200'
                 }`}
               >
                 {link.label}
@@ -159,7 +167,7 @@ const Navbar = () => {
           <a
             href="#contact"
             onClick={(e) => handleScroll(e, '#contact')}
-            className="text-sm font-semibold text-center py-2.5 bg-blue-600 text-white rounded-xl"
+            className="text-xs font-black text-center uppercase tracking-widest py-3 bg-gradient-to-r from-cyan-500 via-blue-500 to-fuchsia-500 text-white rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.2)]"
           >
             Hire Me
           </a>
