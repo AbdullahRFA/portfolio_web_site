@@ -139,3 +139,21 @@ Answer: It applies a Scroll Margin Top ($20\text{px}$ or $5\text{rem}$). Since o
 Explain what backdrop-blur-md accomplishes behind the scenes.
 
 Answer: It invokes a localized layout composite raster technique utilizing CSS filters. It samples any complex pixel coordinates processing directly behind the box element layer and outputs a soft blur filter, generating an Apple-style translucent architectural texture that reads beautifully.
+
+
+What are Framer Motion variants and why are they considered best practice over inline layout properties?
+
+Answer: Variants are clean configuration objects that decouple layout styling from actual layout structural markup. They clean up the code and enable advanced animation configurations like propagation staging (staggerChildren), where parent containers control coordinated sequential load fades of children components automatically.
+
+
+Why do we use an abstract layout blob with pointer-events-none?
+
+Answer: The pointer-events-none utility ensures that the decorative CSS layout background blur elements are completely transparent to browser mouse events. If a user clicks over that area, the click passes right through to select text or trigger link targets underneath without interaction blocking.
+
+
+
+Explain the significance of the relative ping animation element in the status badge.
+
+Answer: It uses a continuous, lightweight CSS-driven scaling pulse layout (animate-ping). This serves as a real-time behavioral design affordance that signals high active availability to recruiters immediately without dragging layout calculation loops down.
+
+

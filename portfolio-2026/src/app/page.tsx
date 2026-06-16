@@ -2,6 +2,7 @@ import ProjectCard from "../components/ProjectCard";
 import AboutSection from '../components/AboutSection'; 
 import SkillsBento from '../components/SkillsBento'; 
 import ContactForm from '../components/ContactForm'; 
+import Hero from '../components/Hero'; // <-- Import the new Hero component
 
 interface Project {
   _id: string;
@@ -23,21 +24,13 @@ export default async function Home() {
   const projects = await getProjects();
 
   return (
-    <main className="max-w-6xl mx-auto px-6 py-20 space-y-24">
-      {/* Hero Section */}
-      <section className="pt-10">
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-          Software <span className="text-blue-600">Engineer</span>
-        </h1>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl">
-          Building scalable full-stack applications with the MERN stack and
-          Next.js. Check out my latest work below.
-        </p>
-      </section>
+    <main className="max-w-6xl mx-auto px-6 pb-20 space-y-24">
+      {/* 3.1 Refined Interactive Hero Section */}
+      <Hero />
 
       {/* Projects Grid Anchor Target */}
       <section id="projects" className="scroll-mt-20">
-        <h2 className="text-3xl font-bold mb-10">Featured Projects</h2>
+        <h2 className="text-3xl font-bold mb-10 text-zinc-900 dark:text-zinc-50 tracking-tight">Featured Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.length > 0 ? (
             projects.map((project: Project) => (
@@ -49,7 +42,7 @@ export default async function Home() {
               />
             ))
           ) : (
-            <p>No projects found. Add some via Postman!</p>
+            <p className="text-sm text-zinc-500">No projects found. Add some via Postman!</p>
           )}
         </div>
       </section>
