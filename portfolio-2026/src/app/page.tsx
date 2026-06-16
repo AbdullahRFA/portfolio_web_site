@@ -2,6 +2,10 @@ import ProjectCard from "../components/ProjectCard";
 // src/app/page.tsx
 import AboutSection from '../components/AboutSection'; // <-- Import the section
 import SkillsBento from '../components/SkillsBento'; // <-- Import the new module
+
+import ContactForm from '../components/ContactForm'; // <-- Import component
+
+
 interface Project {
   _id: string;
   title: string;
@@ -64,6 +68,9 @@ export default async function Home() {
 
       {/* About & Experience Section */}
       <AboutSection /> 
+
+      {/* Contact Form Integration Component */}
+      <ContactForm />
 
     </main>
   );

@@ -111,3 +111,16 @@ Answer: By default, items occupy a single cell ($1 \times 1$). col-span-2 forces
 Why use backdrop-blur-sm along with opacity colors like bg-white/80 for the background elements?
 
 Answer: This leverages advanced modern CSS filters to produce a premium "glassmorphism" visual style. It softly blurs any background gradient hues bleeding through beneath the element panel layer, providing better text contrast and professional depth.
+
+
+Why do we perform data validation inside the API Route (route.ts) if our HTML fields already have the required validation tag?
+
+Answer: Frontend security is completely bypassable. Anyone can use Postman, curl, or modify browser developer tools to delete the required tag from your HTML elements and submit an empty or broken payload. Backend validation acts as the ultimate truth barrier to guarantee only clean schema shapes step into your database.
+
+What does the disabled={status === 'loading'} state protect your app from?
+
+Answer: It prevents accidental spamming via Race Conditions or multiple submissions. If a user double clicks or triple clicks a submit button on a slow network connection without this block, your app will trigger three separate fetch queries simultaneously, generating three duplicate identical entry rows in your MongoDB collection database.
+
+Explain why we use Mongoose trim: true properties.
+
+Answer: It is a data-sanitization mechanism. It strips any accidental lead spaces or trailing whitespace characters from input values before storage (e.g., changing "   hello   " to safely match "hello").
