@@ -232,3 +232,17 @@ Answer: OAuth is a token-based open standard authorization framework. Instead of
 What is the structural utility of utilizing external CDN avatar generators like Dicebear for guest users?
 
 Answer: It solves empty profile styling edge cases gracefully without increasing database overhead. If an authenticated user doesn't possess a public GitHub avatar photo asset, mapping their username string into an absolute vector API path dynamically handles a unique, beautiful profile graphic instantly.
+
+
+Viva Prep: Git Workflows & Enterprise Practices
+Why is it absolutely critical to verify .env.local is listed inside .gitignore before executing git add .?
+
+Answer: .env.local houses secret connection strings, API tokens, and database passwords (like your MONGODB_URI). If committed to a public GitHub repository, automated scrapers and bots will scan the codebase within minutes, steal your credentials, and compromise or corrupt your database.
+
+What does the -u flag achieve inside git push -u origin main?
+
+Answer: It sets the upstream tracking reference. It links your local main branch to the main branch on the remote server (origin). For all future updates, you won't need to specify coordinates; you can simply run git push or git pull, and Git will know exactly where to synchronize data.
+
+What is the difference between your local Git repository and a remote repository host like GitHub?
+
+Answer: Git is the decentralized version control software engine running locally on your computer to track code snapshots and histories. GitHub is a cloud-based hosting platform that stores copies of your Git repositories, allowing team collaboration, code backup, and deployment automation pipelines (like Vercel).

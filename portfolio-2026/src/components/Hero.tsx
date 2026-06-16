@@ -1,8 +1,8 @@
 'use client'; // Required for Framer Motion animation loops running in the browser
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image'; // <-- Import Next.js optimized Image component
+import { motion, Variants } from 'framer-motion'; // <-- Imported Variants type for explicit strict typing
+import Image from 'next/image';
 
 const Hero = () => {
   // Smooth scroll helper for our layout CTA links
@@ -14,8 +14,8 @@ const Hero = () => {
     }
   };
 
-  // Standard engineering container variants for stagger layout rendering
-  const containerVariants = {
+  // Standard engineering container variants for stagger layout rendering (Typed explicitly)
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -23,9 +23,14 @@ const Hero = () => {
     }
   };
 
-  const itemVariants = {
+  // Explicitly typed as Variants so that 'easeOut' satisfies Framer Motion's strict Easing unions
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.5, ease: 'easeOut' } 
+    }
   };
 
   return (
@@ -33,7 +38,7 @@ const Hero = () => {
       {/* Abstract background decorative accent blob */}
       <div className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-blue-400/10 blur-3xl dark:bg-blue-500/5 pointer-events-none" />
       
-      {/* Changed to a responsive grid layout to support text on one side and picture on the other */}
+      {/* Responsive grid layout supporting text content on left and photo on right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Column: Core Text Data Content (Spans 7 out of 12 columns) */}
@@ -96,10 +101,10 @@ const Hero = () => {
         >
           <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden border-4 border-white dark:border-zinc-900 shadow-xl shadow-zinc-200/50 dark:shadow-none bg-zinc-100 dark:bg-zinc-900">
             <Image
-              src="/profile_picture/profile_pic_3.jpg" // <-- Path pointing to public/avatar.png
+              src="/profile_picture/profile_pic_3.jpg" // Absolute public asset reference routing path
               alt="Abdullah Nazmus-Sakib Profile Picture"
-              fill // Instructs image to completely fill parent container block
-              priority // Tells Next.js to preload this image immediately since it's above the fold
+              fill // Instructs image to completely fill parent container block boundaries
+              priority // Preloads this image instantly on initial server-side load as it lives above the fold
               sizes="(max-w-768px) 100vw, 33vw"
               className="object-cover hover:scale-105 transition-transform duration-500"
             />
