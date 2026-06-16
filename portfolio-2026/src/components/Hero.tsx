@@ -101,11 +101,9 @@ const Hero = () => {
 
           {/* Core Introduction Headline */}
           <motion.div variants={itemVariants} className="space-y-2">
-            {/* FIXED: Changed text-zinc-400 to text-zinc-300 to pop dramatically on light/dark mode view layers */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-zinc-300">
               Hello, it's me
             </h1>
-            {/* FIXED: Shifted main title text from zinc-900 to explicit clear high-contrast white text-zinc-50 */}
             <div className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-50 leading-none">
               Abdullah Nazmus Sakib
             </div>
@@ -119,7 +117,6 @@ const Hero = () => {
             I'm a <span ref={el} className="text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-fuchsia-400 bg-clip-text drop-shadow-[0_0_12px_rgba(6,182,212,0.3)]" />
           </motion.div>
 
-          {/* FIXED: Set color parameter baseline to text-zinc-300 to optimize text visibility */}
           <motion.p
             variants={itemVariants}
             className="text-base text-zinc-300 font-normal leading-relaxed max-w-2xl"
@@ -162,6 +159,7 @@ const Hero = () => {
 
           {/* Action Interface Controllers Buttons (CTAs) with Neon Hover Shadows */}
           <motion.div
+            vertical-align="middle"
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center gap-4 pt-2"
           >
@@ -186,10 +184,10 @@ const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* --- RIGHT COLUMN: CYBER CANVAS WITH THE SPINNING GRADIENT HIGHLIGHT RING --- */}
+        {/* --- RIGHT COLUMN: CYBER CANVAS WITH THE SPINNING GRADIENT HIGHLIGHT BORDER --- */}
         <div className="lg:col-span-5 relative flex justify-center lg:justify-end mt-12 lg:mt-0">
           
-          {/* 1. Floating Next.js Badge Element */}
+          {/* Asymmetric Technology Drift Badges */}
           <motion.div 
             variants={floatAnimation(0)} initial="initial" animate="animate"
             className="absolute -top-6 -left-4 z-20 bg-zinc-900/90 backdrop-blur-md border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
@@ -198,7 +196,6 @@ const Hero = () => {
             <span className="text-xs font-bold text-zinc-200">Next.js / MERN</span>
           </motion.div>
 
-          {/* 2. Floating Flutter App Dev Badge Element */}
           <motion.div 
             variants={floatAnimation(0.8)} initial="initial" animate="animate"
             className="absolute top-[40%] -left-14 z-20 bg-zinc-900/90 backdrop-blur-md border border-fuchsia-500/20 shadow-[0_0_15px_rgba(240,147,251,0.1)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
@@ -207,7 +204,6 @@ const Hero = () => {
             <span className="text-xs font-bold text-zinc-200">Flutter App Dev</span>
           </motion.div>
 
-          {/* 3. Floating AI/ML Engineer Badge Element */}
           <motion.div 
             variants={floatAnimation(1.6)} initial="initial" animate="animate"
             className="absolute bottom-6 -right-6 z-20 bg-zinc-900/90 backdrop-blur-md border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
@@ -223,11 +219,16 @@ const Hero = () => {
             transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.3 }}
             className="relative w-full max-w-[290px] sm:max-w-[320px] aspect-[3/4] rounded-[2.5rem] flex items-center justify-center group overflow-visible"
           >
-            {/* Infinite Spinning Neon Gradient Halo Background Frame Overlay */}
-            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-cyan-400 via-blue-500 to-fuchsia-500 animate-spin opacity-85 blur-xs" style={{ animationDuration: '8s' }} />
+            {/* FIXED: We set explicit overflow-hidden on the parent container box, mask it down, and scale the spinning gradient exclusively over a 2px outer margin frame edge */}
+            <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden pointer-events-none">
+              <div 
+                className="absolute inset-[-50%] bg-gradient-to-tr from-cyan-400 via-blue-500 to-fuchsia-500 animate-spin opacity-90" 
+                style={{ animationDuration: '8s' }} 
+              />
+            </div>
             
-            {/* Inner frame mask separating photo layer from glowing track lines */}
-            <div className="absolute inset-[4px] rounded-[2.35rem] overflow-hidden bg-zinc-950 z-10">
+            {/* FIXED: The inner container completely covers the center background with a crisp black canvas inset by exactly 2px (`inset-[2px]`), restricting the animation visible state exclusively to the thin outer border track border boundary line */}
+            <div className="absolute inset-[2px] rounded-[2.4rem] overflow-hidden bg-zinc-950 z-10">
               <div className="absolute inset-0 z-20 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none" />
               
               <Image
