@@ -10,7 +10,6 @@
 
 - Answer: Next.js API routes are serverless. Every time a user hits an API, a new instance might spin up. Without caching, we would create a new DB connection every single time, eventually crashing our database (Too Many Connections error).
 
-
 ## 4. What does mv app src/ do?
 
 - It moves the entire routing directory into src. Next.js is smart; it automatically checks if a src/app or app folder exists. By moving it, we are just organizing our "Source" code.
@@ -22,7 +21,7 @@
 ## 6. What is .env.local?
 
 - It’s a file where we store sensitive secrets (like DB passwords). Never commit this file to GitHub!
-  
+
 ## 7. What is the benefit of the src/ directory?
 
 - Answer: It creates a clear boundary between Project Meta-files (configs, linting, packages) and Application Source Code. This improves scannability and prevents the root folder from becoming a "junk drawer" of files.
@@ -34,7 +33,6 @@
 ## 9. What does the ! after process.env.MONGODB_URI! do?
 
 - Answer: That is the Non-null assertion operator in TypeScript. It tells the compiler, "I guarantee this variable will exist at runtime, so don't complain about it potentially being undefined."
-
 
 ## Why do we export both an interface and a model?
 
@@ -58,7 +56,7 @@ Answer: In Next.js App Router, the request body is a Stream. We have to "await" 
 
 ## How does the frontend know which project is which?
 
-Answer: MongoDB automatically generates a unique _id (ObjectId) for every document. We use this ID later for specific project pages (e.g., /projects/123).
+Answer: MongoDB automatically generates a unique \_id (ObjectId) for every document. We use this ID later for specific project pages (e.g., /projects/123).
 
 ## What is line-clamp-2 in Tailwind?
 
@@ -71,3 +69,15 @@ Answer: Because it's a Server Component. Fetching data here is faster (less Java
 ## What is process.env.NEXT_PUBLIC_BASE_URL?
 
 Answer: When running on localhost, the URL is http://localhost:3000, but when we deploy to Vercel, it changes. We use an environment variable so the code works in both places.
+
+## Can you explain what "Hydration" actually means?
+
+Answer: Hydration is the process where React, running in the browser, attaches event listeners and its logic to the static HTML that was already sent by the server. It turns "dead" HTML into a "live" interactive application.
+
+## Why is it a problem if the HTML doesn't match?
+
+Answer: React expects the DOM to be in a specific state. If it's different, React might misplace components, event listeners might fail to attach, or you might get visual "flickers" where the content jumps as React tries to fix the mismatch.
+
+## Besides extensions, what else causes this?
+
+Answer: Using Math.random() or new Date() inside the component body. Since the random number generated on the server will be different from the one generated on the client, they won't match!
