@@ -1,5 +1,6 @@
 import ProjectCard from "../components/ProjectCard";
-
+// src/app/page.tsx
+import AboutSection from '../components/AboutSection'; // <-- Import the section
 interface Project {
   _id: string;
   title: string;
@@ -56,6 +57,11 @@ export default async function Home() {
           )}
         </div>
       </section>
+
+      {/* About & Experience Section */}
+      <AboutSection /> 
+
     </main>
   );
 }
+

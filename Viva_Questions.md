@@ -81,3 +81,18 @@ Answer: React expects the DOM to be in a specific state. If it's different, Reac
 ## Besides extensions, what else causes this?
 
 Answer: Using Math.random() or new Date() inside the component body. Since the random number generated on the server will be different from the one generated on the client, they won't match!
+
+
+
+Viva Prep: Intern to Engineer Concepts
+Why do we put 'use client' at the top of Timeline.tsx but not AboutSection.tsx?
+
+Answer: Next.js uses an optimization strategy where components are Server Components by default. However, interactive features that use React hooks like useState or user event listeners like onClick must run in the browser. By putting 'use client' at the top of Timeline.tsx, we isolate the client-side interactivity, allowing AboutSection.tsx to remain a fast, static Server Component.
+
+What is the benefit of mapping an array (item.description.map) over hardcoding standard <li> blocks?
+
+Answer: Maintainability and data separation. It keeps the presentation layer separate from the data layer. If your job roles update or change tomorrow, you only edit the JavaScript object asset layout inside aboutData.ts without risking breaking your UI code structure.
+
+Explain the structural layout choice of grid-cols-1 lg:grid-cols-3.
+
+Answer: This is Tailwind's Mobile-First Responsive Web Design (RWD) approach. By default (grid-cols-1), everything stacks vertically inside one column, which fits perfectly on mobile screens. The lg: prefix acts as a media-query breakpoint; when the screen resolution is large (desktop size), it snaps to a clean three-column side-by-side grid asset layout.
