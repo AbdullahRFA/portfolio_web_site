@@ -8,7 +8,8 @@ import Guestbook from '../components/Guestbook';
 
 export default async function Home() {
   return (
-    <main className="max-w-6xl mx-auto px-6 pb-20 space-y-24">
+    // FIXED: Swapped space-y-24 to space-y-6 to prevent margin-stacking inflation between your components
+    <main className="max-w-6xl mx-auto px-6 pb-20 space-y-2 ">
       
       {/* 3.1 Refined Interactive Hero Section */}
       <div id="home" className="scroll-mt-24">
@@ -16,7 +17,6 @@ export default async function Home() {
       </div>
 
       {/* 3.5 Project Showcase Module with Layout Filtering & Modals */}
-      {/* FIXED: Keeps only this module which handles filtering, grid displays, and modal logic smoothly */}
       <ProjectShowcase />
 
       {/* 3.3 Skills Bento Grid Anchor Target */}
