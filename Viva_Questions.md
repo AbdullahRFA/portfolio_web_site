@@ -124,3 +124,18 @@ Answer: It prevents accidental spamming via Race Conditions or multiple submissi
 Explain why we use Mongoose trim: true properties.
 
 Answer: It is a data-sanitization mechanism. It strips any accidental lead spaces or trailing whitespace characters from input values before storage (e.g., changing "   hello   " to safely match "hello").
+
+
+
+Why did we import <Navbar /> inside layout.tsx instead of directly into page.tsx?
+
+Answer: layout.tsx serves as the global parent frame shell for our entire application structure. Mounting structural items here guarantees that as your platform scales later—like adding unique subroutes for individual standalone blog posts (/blog/[slug])—the navigation menu stays persisted on screen without re-rendering or duplicating page code imports.
+
+
+What does scroll-mt-20 handle in our Tailwind container classes?
+
+Answer: It applies a Scroll Margin Top ($20\text{px}$ or $5\text{rem}$). Since our professional Navbar uses a sticky top-0 overlay style, it occupies physical space on top of viewport frames. Without scroll-mt-20, clicking an anchor jump link would cause the section title text to slide completely underneath the Navbar panel, hiding it from sight.
+
+Explain what backdrop-blur-md accomplishes behind the scenes.
+
+Answer: It invokes a localized layout composite raster technique utilizing CSS filters. It samples any complex pixel coordinates processing directly behind the box element layer and outputs a soft blur filter, generating an Apple-style translucent architectural texture that reads beautifully.

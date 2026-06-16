@@ -1,10 +1,7 @@
 import ProjectCard from "../components/ProjectCard";
-// src/app/page.tsx
-import AboutSection from '../components/AboutSection'; // <-- Import the section
-import SkillsBento from '../components/SkillsBento'; // <-- Import the new module
-
-import ContactForm from '../components/ContactForm'; // <-- Import component
-
+import AboutSection from '../components/AboutSection'; 
+import SkillsBento from '../components/SkillsBento'; 
+import ContactForm from '../components/ContactForm'; 
 
 interface Project {
   _id: string;
@@ -13,17 +10,11 @@ interface Project {
   techStack: string[];
 }
 
-// This function runs on the server
 async function getProjects(): Promise<Project[]> {
-  // We call our own API endpoint
-  // Use absolute URL for server-side fetching in Next.js
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/projects`,
-    {
-      cache: "no-store", // Ensures we get fresh data every time
-    },
+    { cache: "no-store" },
   );
-
   if (!res.ok) return [];
   return res.json();
 }
@@ -32,9 +23,9 @@ export default async function Home() {
   const projects = await getProjects();
 
   return (
-    <main className="max-w-6xl mx-auto px-6 py-20">
+    <main className="max-w-6xl mx-auto px-6 py-20 space-y-24">
       {/* Hero Section */}
-      <section className="mb-20">
+      <section className="pt-10">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
           Software <span className="text-blue-600">Engineer</span>
         </h1>
@@ -44,8 +35,8 @@ export default async function Home() {
         </p>
       </section>
 
-      {/* Projects Grid */}
-      <section>
+      {/* Projects Grid Anchor Target */}
+      <section id="projects" className="scroll-mt-20">
         <h2 className="text-3xl font-bold mb-10">Featured Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.length > 0 ? (
@@ -63,16 +54,20 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Skills Bento Grid Module */}
-      <SkillsBento />
+      {/* Skills Bento Grid Anchor Target */}
+      <div id="skills" className="scroll-mt-20">
+        <SkillsBento />
+      </div>
 
-      {/* About & Experience Section */}
-      <AboutSection /> 
+      {/* About Section Anchor Target */}
+      <div id="about" className="scroll-mt-20">
+        <AboutSection />
+      </div> 
 
-      {/* Contact Form Integration Component */}
-      <ContactForm />
-
+      {/* Contact Form Anchor Target */}
+      <div id="contact" className="scroll-mt-20">
+        <ContactForm />
+      </div>
     </main>
   );
 }
-
