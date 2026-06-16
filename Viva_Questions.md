@@ -156,4 +156,15 @@ Explain the significance of the relative ping animation element in the status ba
 
 Answer: It uses a continuous, lightweight CSS-driven scaling pulse layout (animate-ping). This serves as a real-time behavioral design affordance that signals high active availability to recruiters immediately without dragging layout calculation loops down.
 
+Why is using the Next.js <Image /> component better than a standard HTML <img> tag?
 
+Answer: The standard HTML <img> tag loads the raw, uncompressed file size directly to the browser, ruining loading speed metrics (Lighthouse performance scores). The Next.js <Image /> component automatically optimizes images on the fly—compressing them into modern formats like .webp, resizing dimensions based on device viewports, and native lazy-loading images below the fold.
+
+What does the priority property accomplish on our image element?
+
+Answer: It signals to Next.js that this specific image asset is part of the Largest Contentful Paint (LCP) element on the screen. By marking it as a priority, Next.js preloads it into the browser network track immediately, eliminating empty layout flashes and drastically minimizing initial paint times.
+
+
+What does the fill property mean and why do we use object-cover with it?
+
+Answer: The fill property tells the image component to behave fluidly, scaling automatically to completely occupy whatever boundaries its parent element container defines. Using the Tailwind utility object-cover acts like the CSS property object-fit: cover;—it forces the photo to scale proportionally to fill the parent shell without squeezing or losing aspect ratio dimensions.
