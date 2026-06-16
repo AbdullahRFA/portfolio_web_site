@@ -218,3 +218,17 @@ Answer: The browser query mechanism document.querySelector('#home') would resolv
 Why do we apply scroll-mt-24 on the home tracking container element wrapper?
 
 Answer: It guarantees proper screen alignments when users execute manual link returns. Because our navbar panel sits static on the topmost layer screen frame layout via sticky top-0, providing a scroll-margin pad prevents top layout text clipping, matching professional alignment criteria.
+
+
+Viva Prep: Authentication & Safety Engineering
+Why do we enforce a strict maxLength={150} constraint character restriction on our guestbook input field text areas?
+
+Answer: Storage cost optimization and security defense. Malicious actors or scripts can attempt to submit massive strings of arbitrary characters or base64 data to crash your rendering layer or inflate your MongoDB storage document allocation footprint. Limiting inputs at the form level acts as an early data boundary.
+
+What is OAuth and what major advantage does it present compared to manual email/password auth tables?
+
+Answer: OAuth is a token-based open standard authorization framework. Instead of your portfolio app asking for and securely salting/hashing passwords, it delegates credential confirmation to verified identity giants like GitHub. GitHub validates the user and sends a secure signature back to Auth.js containing only safe profile metadata, completely neutralizing data breach liabilities for your platform.
+
+What is the structural utility of utilizing external CDN avatar generators like Dicebear for guest users?
+
+Answer: It solves empty profile styling edge cases gracefully without increasing database overhead. If an authenticated user doesn't possess a public GitHub avatar photo asset, mapping their username string into an absolute vector API path dynamically handles a unique, beautiful profile graphic instantly.

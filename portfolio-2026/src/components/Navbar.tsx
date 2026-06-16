@@ -13,6 +13,7 @@ const Navbar = () => {
     { label: 'Skills', href: '#skills' },
     { label: 'Blog', href: '#blog' },
     { label: 'About', href: '#about' },
+    { label: 'Guestbook', href: '#guestbook' }, // <-- Added layout target link
     { label: 'Contact', href: '#contact' },
   ];
 

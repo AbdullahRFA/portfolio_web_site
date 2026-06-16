@@ -8,6 +8,9 @@ import ProjectShowcase from '../components/ProjectShowcase'; // <-- Import new c
 
 import BlogShowcase from '../components/BlogShowcase'; // <-- Import component
 
+import Guestbook from '../components/Guestbook'; // <-- Import component
+
+
 interface Project {
   _id: string;
   title: string;
@@ -73,6 +76,11 @@ export default async function Home() {
       <div id="about" className="scroll-mt-20">
         <AboutSection />
       </div> 
+
+      {/* 3.8 Guestbook Module Anchor Section */}
+      <div id="guestbook" className="scroll-mt-20">
+        <Guestbook />
+      </div>
 
 
       {/* Contact Form Anchor Target */}
