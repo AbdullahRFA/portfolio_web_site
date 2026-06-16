@@ -1,9 +1,10 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "../components/Navbar"; // <-- Import the Navbar
+import Navbar from "../components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Software Engineer Portfolio",
+  title: "ANS - Official Portfolio",
   description: "Advanced full-stack portfolio built using Next.js, TypeScript, Tailwind, and MongoDB.",
 };
 
@@ -14,9 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      {/* suppressHydrationWarning handles third-party extension attributes */}
-      <body className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 antialiased selection:bg-blue-500/30" suppressHydrationWarning>
-        <Navbar /> {/* <-- Render globally above page contents */}
+      {/* FIXED: The body tag utilizes background tokens that cleanly resolve to your variables */}
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-blue-500/30" suppressHydrationWarning>
+        <Navbar />
         {children}
       </body>
     </html>
