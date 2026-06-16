@@ -119,7 +119,7 @@ const Hero = () => {
         >
           <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden border-4 border-white dark:border-zinc-900 shadow-xl shadow-zinc-200/50 dark:shadow-none bg-zinc-100 dark:bg-zinc-900">
             <Image
-              src="/profile_picture/Profile_pic_4.jpg" // <-- FIX: Points directly to your clean profile photo using correct uppercase casing
+              src="/Profile_pic_2.jpg" // <-- FIX: Points directly to your clean profile photo using correct uppercase casing
               alt="Abdullah Nazmus-Sakib Profile Picture"
               fill // Instructs image to completely fill parent container block boundaries
               priority // Preloads this image instantly on initial server-side load as it lives above the fold
