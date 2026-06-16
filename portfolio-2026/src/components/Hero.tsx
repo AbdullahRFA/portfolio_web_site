@@ -91,7 +91,7 @@ const Hero = () => {
             .
           </motion.h1>
 
-          {/* Core Profile Context Summary Text */}
+          {/* Core Profile Context Summary Text[cite: 3] */}
           <motion.p
             variants={itemVariants}
             className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 font-normal leading-relaxed max-w-2xl"
@@ -164,22 +164,23 @@ const Hero = () => {
           </motion.div>
 
           {/* Primary Profile Frame Canvas Container Wrapper */}
+          {/* COMMENT FIXED: Moved cleanly outside the layout token element to prevent compilation parser breaks */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.3 }}
-            className="relative w-68 h-68 sm:w-76 sm:h-76 md:w-84 md:h-84 rounded-[2.5rem] overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl shadow-zinc-300/60 dark:shadow-none bg-zinc-100 dark:bg-zinc-900 group"
+            className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[340px] aspect-[3/4] rounded-[2.5rem] overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl shadow-zinc-300/60 dark:shadow-none bg-zinc-100 dark:bg-zinc-900 group"
           >
             {/* Soft dark visual shadow overlay gradient */}
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-zinc-950/20 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-zinc-950/30 via-transparent to-transparent pointer-events-none" />
             
             <Image
-              src="/profile_picture/profile_pic_2.jpg" // Clean lowercase, standard characters public portrait path
+              src="/profile_picture/profile_pic_2.jpg"
               alt="Abdullah Nazmus Sakib Portrait"
               fill
               priority // High-priority LCP preloading trigger
               sizes="(max-w-768px) 100vw, 33vw"
-              className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out grayscale-[10%] group-hover:grayscale-0"
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
             />
           </motion.div>
         </div>
