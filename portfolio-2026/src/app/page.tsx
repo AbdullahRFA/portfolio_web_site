@@ -4,6 +4,8 @@ import SkillsBento from '../components/SkillsBento';
 import ContactForm from '../components/ContactForm'; 
 import Hero from '../components/Hero'; // <-- Import the new Hero component
 
+import ProjectShowcase from '../components/ProjectShowcase'; // <-- Import new component
+
 interface Project {
   _id: string;
   title: string;
@@ -27,6 +29,9 @@ export default async function Home() {
     <main className="max-w-6xl mx-auto px-6 pb-20 space-y-24">
       {/* 3.1 Refined Interactive Hero Section */}
       <Hero />
+
+      {/* 3.5 Project Showcase Module with Layout Filtering & Modals */}
+      <ProjectShowcase />
 
       {/* Projects Grid Anchor Target */}
       <section id="projects" className="scroll-mt-20">

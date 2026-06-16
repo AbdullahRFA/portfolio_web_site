@@ -168,3 +168,28 @@ Answer: It signals to Next.js that this specific image asset is part of the Larg
 What does the fill property mean and why do we use object-cover with it?
 
 Answer: The fill property tells the image component to behave fluidly, scaling automatically to completely occupy whatever boundaries its parent element container defines. Using the Tailwind utility object-cover acts like the CSS property object-fit: cover;—it forces the photo to scale proportionally to fill the parent shell without squeezing or losing aspect ratio dimensions.
+
+
+Why does Next.js automatically map the public/ directory to the root / path?
+
+Answer: To simplify asset serving and optimization. When Next.js compiles the site for production, everything inside the public folder is copied directly to the root of the web server deployment. This allows global access to assets (like icons, logos, or pictures) from any nested file route under a single uniform base URL path.
+
+
+What would happen if we didn't use a leading slash /?
+
+Answer: If you use a path like src="profile_pic_2.jpg", Next.js assumes it is relative to the current route. If a user visits your homepage, it might load, but if they visit a nested blog page like /blog/my-first-post, the browser will try to look for the photo at /blog/profile_pic_2.jpg, resulting in a broken 404 Not Found error. The leading slash forces an absolute path lookup from the root server location.
+
+
+
+Viva Prep: Advanced UI/UX State Operations
+What does the <AnimatePresence> component achieve in our layouts?
+
+Answer: React unmounts components instantly when their rendering conditions change (e.g., removing a modal or filtering out a card). <AnimatePresence> intercepts this lifecycle step. It delays unmounting until your exit animations (like a fade-out or slide-down) complete, ensuring smooth transitions.
+
+Why do we invoke e.stopPropagation() inside the Modal Card container container element?
+
+Answer: Event bubbling causes click events to propagate up through parent layout trees. Since clicking the backdrop layout closes our modal overlay, clicking inside the modal card content panel would trigger that same parent closure rule if not stopped. e.stopPropagation() halts this bubbling, allowing buttons inside the card to work normally.
+
+What does the layout flag attribute accomplish on Framer Motion divs?
+
+Answer: It handles FLIP layout animations internally. When data filters change and the array shrinks or grows, elements change sizes or physical screen coordinates. Applying the layout attribute triggers automated calculation overlays that animate elements to their new grid coordinates at 60 FPS, avoiding abrupt visual jumps.
