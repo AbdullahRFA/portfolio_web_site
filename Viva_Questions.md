@@ -193,3 +193,17 @@ Answer: Event bubbling causes click events to propagate up through parent layout
 What does the layout flag attribute accomplish on Framer Motion divs?
 
 Answer: It handles FLIP layout animations internally. When data filters change and the array shrinks or grows, elements change sizes or physical screen coordinates. Applying the layout attribute triggers automated calculation overlays that animate elements to their new grid coordinates at 60 FPS, avoiding abrupt visual jumps.
+
+
+Viva Prep: Static Engine Architecture
+What is "Static Site Generation" (SSG) and why does it drastically optimize core web vitals for search engine optimization?
+
+Answer: SSG is a deployment rendering strategy where Next.js reads code and external assets (like local markdown arrays or files) once during execution of compilation build commands. It builds complete static HTML pages ahead of time. When a visitor requests that page, the server streams the file instantly without calculating any real-time database query lookups, keeping First Contentful Paint times under 1 second.
+
+Explain the runtime execution utility of Set inside this extraction string: Array.from(new Set(...))
+
+Answer: It isolates distinct values. By mapping all category fields across our posts array, we create a basic array containing duplicate strings if multiple blogs share a category. Passing that array into a JavaScript Set data structure strips away all duplicate entries. Wrap-parsing it inside Array.from() maps it right back into a clean array layout structure that our loop controls can iterate over safely.
+
+What does the layout configuration mode="popLayout" handle inside Framer Motion contexts?
+
+Answer: When content filters change, disappearing cards leave physical grid track spaces before exit routines complete, causing adjacent layout blocks to jump up awkwardly. popLayout isolates fading elements out of the viewport document flow instantly. This allows incoming items to transition smoothly into their new coordinates while exiting elements finish fading out, creating a fluid visual flow.

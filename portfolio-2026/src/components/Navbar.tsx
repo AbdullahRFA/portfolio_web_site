@@ -8,6 +8,7 @@ const Navbar = () => {
   const navLinks = [
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
+    { label: 'Blog', href: '#blog' }, // <-- Added layout target link
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ];

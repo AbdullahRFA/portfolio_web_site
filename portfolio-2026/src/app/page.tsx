@@ -6,6 +6,8 @@ import Hero from '../components/Hero'; // <-- Import the new Hero component
 
 import ProjectShowcase from '../components/ProjectShowcase'; // <-- Import new component
 
+import BlogShowcase from '../components/BlogShowcase'; // <-- Import component
+
 interface Project {
   _id: string;
   title: string;
@@ -56,11 +58,17 @@ export default async function Home() {
       <div id="skills" className="scroll-mt-20">
         <SkillsBento />
       </div>
+      
+      {/* 3.6 Blog Module Integration Element */}
+      <div id="blog" className="scroll-mt-20">
+        <BlogShowcase />
+      </div>
 
       {/* About Section Anchor Target */}
       <div id="about" className="scroll-mt-20">
         <AboutSection />
       </div> 
+
 
       {/* Contact Form Anchor Target */}
       <div id="contact" className="scroll-mt-20">
