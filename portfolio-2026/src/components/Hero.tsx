@@ -118,15 +118,15 @@ const Hero = () => {
           className="lg:col-span-5 flex justify-center lg:justify-end"
         >
           <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden border-4 border-white dark:border-zinc-900 shadow-xl shadow-zinc-200/50 dark:shadow-none bg-zinc-100 dark:bg-zinc-900">
-            <Image
-              src="/Profile_pic_2.jpg" // <-- FIX: Points directly to your clean profile photo using correct uppercase casing
-              alt="Abdullah Nazmus-Sakib Profile Picture"
-              fill // Instructs image to completely fill parent container block boundaries
-              priority // Preloads this image instantly on initial server-side load as it lives above the fold
-              sizes="(max-w-768px) 100vw, 33vw"
-              className="object-cover hover:scale-105 transition-transform duration-500"
-            />
-          </div>
+  <Image
+    src="/profile_picture/profile_pic_2.jpg" // <-- FIXED PATH: Points to your lowercase, correctly spelled public portrait asset
+    alt="Abdullah Nazmus-Sakib Profile Picture"
+    fill // Instructs image to completely fill parent container block boundaries
+    priority // Preloads this image instantly on initial server-side load as it lives above the fold
+    sizes="(max-w-768px) 100vw, 33vw"
+    className="object-cover hover:scale-105 transition-transform duration-500"
+  />
+</div>
         </motion.div>
       </div>
     </section>
