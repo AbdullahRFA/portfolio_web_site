@@ -1,22 +1,60 @@
-'use client'; // Required since we track mobile toggle states and handle click scrolling
+'use client'; // Required since we handle window scrolling, hooks, and observer states
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   const navLinks = [
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
-    { label: 'Blog', href: '#blog' }, // <-- Added layout target link
+    { label: 'Blog', href: '#blog' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ];
 
-  // Smooth scroll helper so page hops feel elegant
+  // 1. Intersection Observer logic to track scrolling position
+  useEffect(() => {
+    const observerOptions = {
+      root: null, // Defaults to the browser viewport
+      rootMargin: '-20% 0px -60% 0px', // Triggers when section occupies the sweet-spot of the screen
+      threshold: 0, // Trigger as soon as the section enters the margin area
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+    // Track all elements that match our navigation links
+    navLinks.forEach((link) => {
+      const el = document.querySelector(link.href);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      // Clean up observer connections when component unmounts
+      navLinks.forEach((link) => {
+        const el = document.querySelector(link.href);
+        if (el) observer.unobserve(el);
+      });
+    };
+  }, []);
+
+  // 2. Smooth scroll helper that also sets active state instantly on click
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsOpen(false); // Close mobile tray if open
+    setIsOpen(false); // Close mobile menu drawer if open
+    
+    const targetId = href.replace('#', '');
+    setActiveSection(targetId);
+
     const targetElement = document.querySelector(href);
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -27,9 +65,14 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-200/60 bg-white/80 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80 transition-all">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
         
-        {/* Brand Logo / Monogram */}
+        {/* Brand Logo */}
         <a 
           href="#" 
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setActiveSection('');
+          }}
           className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
         >
           AN<span className="text-blue-600">.</span>Sakib
@@ -37,20 +80,39 @@ const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleScroll(e, link.href)}
-              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const linkId = link.href.replace('#', '');
+            const isActive = activeSection === linkId;
+
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleScroll(e, link.href)}
+                className={`text-sm font-medium transition-all relative py-1 ${
+                  isActive
+                    ? 'text-blue-600 dark:text-blue-400 font-semibold'
+                    : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+                }`}
+              >
+                {link.label}
+                
+                {/* Active Underline Pill Animation */}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />
+                )}
+              </a>
+            );
+          })}
+          
           <a
             href="#contact"
             onClick={(e) => handleScroll(e, '#contact')}
-            className="text-xs font-semibold px-4 py-2 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 rounded-full hover:bg-blue-600 dark:hover:bg-blue-500 dark:hover:text-white transition-all shadow-sm"
+            className={`text-xs font-semibold px-4 py-2 rounded-full transition-all shadow-sm ${
+              activeSection === 'contact'
+                ? 'bg-blue-600 text-white'
+                : 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-blue-600 dark:hover:bg-blue-500 dark:hover:text-white'
+            }`}
           >
             Hire Me
           </a>
@@ -76,16 +138,25 @@ const Navbar = () => {
       {/* Mobile Menu Dropdown Tray */}
       {isOpen && (
         <div className="md:hidden border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-6 py-4 space-y-4 flex flex-col transition-all">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleScroll(e, link.href)}
-              className="text-sm font-medium text-zinc-600 dark:text-zinc-400 py-1"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const linkId = link.href.replace('#', '');
+            const isActive = activeSection === linkId;
+
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleScroll(e, link.href)}
+                className={`text-sm font-medium py-1 rounded-lg px-2 transition-colors ${
+                  isActive
+                    ? 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400'
+                }`}
+              >
+                {link.label}
+              </a>
+            );
+          })}
           <a
             href="#contact"
             onClick={(e) => handleScroll(e, '#contact')}
