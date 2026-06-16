@@ -246,3 +246,13 @@ Answer: It sets the upstream tracking reference. It links your local main branch
 What is the difference between your local Git repository and a remote repository host like GitHub?
 
 Answer: Git is the decentralized version control software engine running locally on your computer to track code snapshots and histories. GitHub is a cloud-based hosting platform that stores copies of your Git repositories, allowing team collaboration, code backup, and deployment automation pipelines (like Vercel).
+
+
+Viva Prep: Advanced UI/UX Physics
+What does whileInView and viewport={{ once: true }} achieve in production interfaces?
+
+Answer: Standard animations trigger the exact second a web page initializes, meaning elements deep below the fold animate while completely invisible to the user. Using whileInView binds the animation trigger to the browser window scroll track. The once: true property instructs the layout to lock the final state once visible, preventing elements from flying off-screen repeatedly every time a visitor scrolls up and down.
+
+What engineering issue does lg:sticky lg:top-24 solve inside long side-by-side split layouts?
+
+Answer: When the timeline section scales down vertically with 5 expansive roles, the right side column becomes very tall, leaving the left column empty as the user scrolls. Declaring sticky pins the left "About Me" title box inside the viewport boundaries, keeping the layout visually uniform and premium as the user tracks through the timeline data.
