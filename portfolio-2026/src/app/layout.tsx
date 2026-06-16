@@ -15,8 +15,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      {/* FIXED: The body tag utilizes background tokens that cleanly resolve to your variables */}
-      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-blue-500/30" suppressHydrationWarning>
+      {/* FIXED: Removed light-forcing utilities to ensure high contrast against neon layers */}
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-cyan-500/30" suppressHydrationWarning>
         <Navbar />
         {children}
       </body>

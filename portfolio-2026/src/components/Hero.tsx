@@ -76,7 +76,7 @@ const Hero = () => {
       <div className="absolute bottom-10 right-20 -z-10 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl pointer-events-none" />
       
       {/* Cybernetic Grid Matrix Overlay */}
-      <div className="absolute inset-0 -z-20 opacity-[0.02] dark:opacity-[0.04] bg-[radial-gradient(#00f2fe_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+      <div className="absolute inset-0 -z-20 opacity-[0.03] bg-[radial-gradient(#00f2fe_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
@@ -90,7 +90,7 @@ const Hero = () => {
           {/* Active Engineering Status Badge with Cyan Border Highlight */}
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-600 dark:text-cyan-400 text-xs font-semibold tracking-wide w-fit shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 text-xs font-semibold tracking-wide w-fit shadow-[0_0_15px_rgba(6,182,212,0.15)]"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -101,9 +101,11 @@ const Hero = () => {
 
           {/* Core Introduction Headline */}
           <motion.div variants={itemVariants} className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-zinc-400">
+            {/* FIXED: Changed text-zinc-400 to text-zinc-300 to pop dramatically on light/dark mode view layers */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-zinc-300">
               Hello, it's me
             </h1>
+            {/* FIXED: Shifted main title text from zinc-900 to explicit clear high-contrast white text-zinc-50 */}
             <div className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-50 leading-none">
               Abdullah Nazmus Sakib
             </div>
@@ -114,44 +116,44 @@ const Hero = () => {
             variants={itemVariants}
             className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-zinc-100 min-h-[40px]"
           >
-            I'm a <span ref={el} className="text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-fuchsia-500 bg-clip-text drop-shadow-[0_0_10px_rgba(6,182,212,0.3)]" />
+            I'm a <span ref={el} className="text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-fuchsia-400 bg-clip-text drop-shadow-[0_0_12px_rgba(6,182,212,0.3)]" />
           </motion.div>
 
+          {/* FIXED: Set color parameter baseline to text-zinc-300 to optimize text visibility */}
           <motion.p
             variants={itemVariants}
-            className="text-base text-zinc-400 font-normal leading-relaxed max-w-2xl"
+            className="text-base text-zinc-300 font-normal leading-relaxed max-w-2xl"
           >
-            Final-year Computer Science & Engineering student at <span className="font-semibold text-zinc-200">Jahangirnagar University</span>. 
+            Final-year Computer Science & Engineering student at <span className="font-semibold text-zinc-100">Jahangirnagar University</span>. 
             I synthesize robust full-stack microservices, cross-platform mobile apps, and intelligent AI frameworks into scalable production systems.
           </motion.p>
 
           {/* --- SOCIAL MEDIA ACCOUNT INDICATORS ROW --- */}
-          {/* FIXED: Embedded video-matched glowing round social anchor networks */}
           <motion.div variants={itemVariants} className="flex items-center gap-4 pt-1">
             <a 
-              href="https://linkedin.com/in/abdullahrfa" target="_blank" rel="noopener noreferrer"
-              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/40 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300"
+              href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300"
               aria-label="LinkedIn Profile"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
             <a 
-              href="https://github.com/AbdullahRFA" target="_blank" rel="noopener noreferrer"
-              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-400 hover:text-fuchsia-400 hover:border-fuchsia-500/40 hover:shadow-[0_0_15px_rgba(232,121,249,0.4)] transition-all duration-300"
+              href="https://github.com" target="_blank" rel="noopener noreferrer"
+              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-300 hover:text-fuchsia-400 hover:border-fuchsia-500/40 hover:shadow-[0_0_15px_rgba(232,121,249,0.4)] transition-all duration-300"
               aria-label="GitHub Profile"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
             </a>
             <a 
-              href="https://www.facebook.com/abdullah.nazmus.sakib.2024" target="_blank" rel="noopener noreferrer"
-              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-400 hover:text-blue-400 hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all duration-300"
+              href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-300 hover:text-blue-400 hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all duration-300"
               aria-label="Facebook Profile"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10s-10 4.477-10 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-3.543v-2.891h3.543v-2.2c0-3.497 2.136-5.422 5.26-5.422 1.497 0 3.058.268 3.058.268v3.363h-1.722c-1.733 0-2.264 1.076-2.264 2.179v2.38h3.79l-.606 2.891h-3.184v6.987c4.781-.75 8.438-4.887 8.438-9.878z"/></svg>
             </a>
             <a 
-              href="https://www.youtube.com/@383_abdullahnazmus-sakib6" target="_blank" rel="noopener noreferrer"
-              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-400 hover:text-red-400 hover:border-red-500/40 hover:shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-all duration-300"
+              href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+              className="h-10 w-10 rounded-full border border-zinc-800 bg-zinc-900/60 flex items-center justify-center text-zinc-300 hover:text-red-400 hover:border-red-500/40 hover:shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-all duration-300"
               aria-label="YouTube Channel"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 00-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 002.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 002.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.136z"/></svg>
@@ -177,7 +179,7 @@ const Hero = () => {
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, "#contact")}
-              className="px-7 py-3.5 rounded-xl text-sm font-bold text-zinc-400 border border-zinc-800 bg-zinc-950/40 hover:bg-zinc-900 hover:text-zinc-100 hover:border-cyan-500/40 transition-all duration-300 shadow-xs text-center w-full sm:w-auto hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]"
+              className="px-7 py-3.5 rounded-xl text-sm font-bold text-zinc-300 border border-zinc-800 bg-zinc-950/40 hover:bg-zinc-900 hover:text-zinc-100 hover:border-cyan-500/40 transition-all duration-300 shadow-xs text-center w-full sm:w-auto hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]"
             >
               Get In Touch
             </a>
@@ -185,7 +187,6 @@ const Hero = () => {
         </motion.div>
 
         {/* --- RIGHT COLUMN: CYBER CANVAS WITH THE SPINNING GRADIENT HIGHLIGHT RING --- */}
-        {/* FIXED: Re-positioned motion tracking variants safely to clear design coordinate overlaps entirely */}
         <div className="lg:col-span-5 relative flex justify-center lg:justify-end mt-12 lg:mt-0">
           
           {/* 1. Floating Next.js Badge Element */}
