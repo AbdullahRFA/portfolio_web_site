@@ -1,31 +1,32 @@
+// src/lib/blogData.ts
 import { IBlogPost } from '../types/blog';
 
 export const mockBlogPosts: IBlogPost[] = [
   {
-    slug: 'mastering-typescript-interfaces',
-    title: 'Mastering TypeScript Interfaces for Scalable Architectures',
-    excerpt: 'Learn how to use declarative type safety rules, extension parameters, and optional assertions to structure large-scale full-stack application nodes.',
+    slug: 'demystifying-explainable-ai-xai',
+    title: 'Demystifying Explainable AI (XAI) in Modern Decision Systems',
+    excerpt: 'An engineering look at making complex machine learning pipelines transparent. Learn how to bridge the gap between predictive accuracy and interpretability.',
     date: 'June 12, 2026',
-    category: 'TypeScript',
-    readingTime: '4 min read',
-    content: 'TypeScript interfaces provide structure during development time... Here we look deeply into explicit type safety mappings, optional property bindings, and interface merging mechanics.'
-  },
-  {
-    slug: 'nextjs-server-components-deep-dive',
-    title: 'Next.js Server Components: An Engineering Deep Dive',
-    excerpt: 'A clean exploration of React Server Components (RSC) architecture. Understand data streaming, hydration processes, and serverless performance optimizations.',
-    date: 'May 28, 2026',
-    category: 'Next.js',
-    readingTime: '7 min read',
-    content: 'React Server Components revolutionize how web applications execute... By processing intensive layout data fetches directly on server runtimes, zero client-side bundles are generated.'
-  },
-  {
-    slug: 'mongodb-indexing-for-beginners',
-    title: 'Optimizing Document Databases: MongoDB Indexing 101',
-    excerpt: 'Stop writing sluggish queries. Dive into single-field compound indices, execution explain plans, and strategies to lower server lookups from O(N) down to O(log N).',
-    date: 'April 15, 2026',
-    category: 'Database',
+    category: 'AI & ML',
     readingTime: '5 min read',
-    content: 'When database collections scale into hundreds of thousands of entry records, collection scans degrade infrastructure. This guide covers B-Tree index optimizations.'
+    content: 'Explainable AI (XAI) addresses the black-box dilemma of deep networks... By exploring tools like SHAP and LIME, engineers can debug data processing layers and justify model weights.'
+  },
+  {
+    slug: 'building-resilient-architectures-django',
+    title: 'Structuring Scalable Web Architectures with Django and React',
+    excerpt: 'Deep-dive into component-driven frontend architecture tied into robust Python-backed RESTful APIs. Best practices for schema design and query isolation.',
+    date: 'May 28, 2026',
+    category: 'Web Development',
+    readingTime: '7 min read',
+    content: 'Combining Reacts dynamic rendering with Djangos secure ORM provides an exceptional full-stack paradigm... This breakdown explores token-based auth and isolated database collections.'
+  },
+  {
+    slug: 'automated-testing-sqa-pipelines',
+    title: 'Shifting Left: Implementing Automated Testing in SQA Workflows',
+    excerpt: 'Stop manual checking delays. Understand how to design structured automated test scripts that catch critical edge-case regressions directly inside your deployment pipeline.',
+    date: 'April 15, 2026',
+    category: 'SQA Engineering',
+    readingTime: '4 min read',
+    content: 'Software Quality Assurance requires more than basic happy-path validations... Designing test suites that mimic authentic user mutation sequences guarantees complete regression tracking.'
   }
 ];
