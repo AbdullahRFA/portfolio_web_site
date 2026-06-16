@@ -30,10 +30,15 @@ export default async function Home() {
   return (
     <main className="max-w-6xl mx-auto px-6 pb-20 space-y-24">
       {/* 3.1 Refined Interactive Hero Section */}
-      <Hero />
+      {/* <Hero /> */}
+      <div id="home" className="scroll-mt-24">
+        <Hero />
+      </div>
 
       {/* 3.5 Project Showcase Module with Layout Filtering & Modals */}
       <ProjectShowcase />
+
+      {/* Added unique navigation layout element ID anchoring tracking target point */}
 
       {/* Projects Grid Anchor Target */}
       <section id="projects" className="scroll-mt-20">
@@ -58,7 +63,7 @@ export default async function Home() {
       <div id="skills" className="scroll-mt-20">
         <SkillsBento />
       </div>
-      
+
       {/* 3.6 Blog Module Integration Element */}
       <div id="blog" className="scroll-mt-20">
         <BlogShowcase />

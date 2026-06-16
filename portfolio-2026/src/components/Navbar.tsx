@@ -6,7 +6,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
+  // Added 'Home' target item configurations cleanly into our master navigation list
   const navLinks = [
+    { label: 'Home', href: '#home' },
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Blog', href: '#blog' },
@@ -14,12 +16,12 @@ const Navbar = () => {
     { label: 'Contact', href: '#contact' },
   ];
 
-  // 1. Intersection Observer logic to track scrolling position
+  // 1. Intersection Observer logic to track scrolling positions asynchronously
   useEffect(() => {
     const observerOptions = {
-      root: null, // Defaults to the browser viewport
-      rootMargin: '-20% 0px -60% 0px', // Triggers when section occupies the sweet-spot of the screen
-      threshold: 0, // Trigger as soon as the section enters the margin area
+      root: null, // Defaults to the browser viewport bounds frame
+      rootMargin: '-20% 0px -60% 0px', // Bounding box sweet spot criteria
+      threshold: 0, // Fires callback immediately when target boundary crosses margin limits
     };
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
@@ -32,14 +34,14 @@ const Navbar = () => {
 
     const observer = new IntersectionObserver(handleIntersection, observerOptions);
 
-    // Track all elements that match our navigation links
+    // Track all structural elements matching our layout anchors
     navLinks.forEach((link) => {
       const el = document.querySelector(link.href);
       if (el) observer.observe(el);
     });
 
     return () => {
-      // Clean up observer connections when component unmounts
+      // Clean up connections when component unmounts to prevent memory leaks
       navLinks.forEach((link) => {
         const el = document.querySelector(link.href);
         if (el) observer.unobserve(el);
@@ -47,10 +49,10 @@ const Navbar = () => {
     };
   }, []);
 
-  // 2. Smooth scroll helper that also sets active state instantly on click
+  // 2. Smooth scroll helper that maps active selection states instantly on user click triggers
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsOpen(false); // Close mobile menu drawer if open
+    setIsOpen(false); // Close mobile tray navigation if open
     
     const targetId = href.replace('#', '');
     setActiveSection(targetId);
@@ -65,14 +67,10 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-200/60 bg-white/80 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80 transition-all">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Brand Logo - Updated to trigger smooth scroll back to #home target structure */}
         <a 
-          href="#" 
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setActiveSection('');
-          }}
+          href="#home" 
+          onClick={(e) => handleScroll(e, '#home')}
           className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
         >
           AN<span className="text-blue-600">.</span>Sakib
@@ -97,7 +95,7 @@ const Navbar = () => {
               >
                 {link.label}
                 
-                {/* Active Underline Pill Animation */}
+                {/* Active Underline Pill Link Highlight Animation */}
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />
                 )}

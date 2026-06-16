@@ -207,3 +207,14 @@ Answer: It isolates distinct values. By mapping all category fields across our p
 What does the layout configuration mode="popLayout" handle inside Framer Motion contexts?
 
 Answer: When content filters change, disappearing cards leave physical grid track spaces before exit routines complete, causing adjacent layout blocks to jump up awkwardly. popLayout isolates fading elements out of the viewport document flow instantly. This allows incoming items to transition smoothly into their new coordinates while exiting elements finish fading out, creating a fluid visual flow.
+
+
+
+Viva Prep: Architectural Link Tracking
+What would occur if we mapped { label: 'Home', href: '#home' } inside the Navbar configuration array but forgot to append id="home" onto our content sections?
+
+Answer: The browser query mechanism document.querySelector('#home') would resolve as null. As a consequence, our IntersectionObserver loop wrapper logic would skip registering that element, rendering the active tracking link color completely non-functional when scrolling past your Hero section.
+
+Why do we apply scroll-mt-24 on the home tracking container element wrapper?
+
+Answer: It guarantees proper screen alignments when users execute manual link returns. Because our navbar panel sits static on the topmost layer screen frame layout via sticky top-0, providing a scroll-margin pad prevents top layout text clipping, matching professional alignment criteria.
