@@ -9,6 +9,8 @@ const BlogShowcase = () => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedPost, setSelectedPost] = useState<IBlogPost | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const POSTS_PREVIEW_COUNT = 4;
 
   // Ensure modal only renders after hydration completes
   useEffect(() => {
@@ -26,6 +28,10 @@ const BlogShowcase = () => {
     activeCategory === "All"
       ? mockBlogPosts
       : mockBlogPosts.filter((post) => post.category === activeCategory);
+
+  const visiblePosts = showAllPosts
+    ? filteredPosts
+    : filteredPosts.slice(0, POSTS_PREVIEW_COUNT);
 
   // Framer Motion staggered orchestration variants
   const streamContainerVariants: Variants = {
@@ -125,7 +131,7 @@ const BlogShowcase = () => {
       >
         <AnimatePresence mode="popLayout">
           {filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => (
+            visiblePosts.map((post) => (
               <motion.article
                 key={post.slug}
                 variants={articleVariants}
@@ -192,6 +198,35 @@ const BlogShowcase = () => {
             </p>
           )}
         </AnimatePresence>
+
+        {filteredPosts.length > POSTS_PREVIEW_COUNT && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAllPosts((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-zinc-900/90 px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-fuchsia-300 transition-all duration-300 hover:bg-fuchsia-500/10 hover:text-white shadow-lg shadow-fuchsia-500/10"
+            >
+              {showAllPosts ? "See Less Posts" : "See More Posts"}
+              <span
+                className={`inline-flex h-5 w-5 items-center justify-center rounded-full border border-zinc-800 transition-transform duration-300 ${
+                  showAllPosts ? "rotate-180" : "rotate-0"
+                }`}
+              >
+                <svg
+                  className="w-3 h-3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        )}
       </motion.div>
 
       <AnimatePresence>

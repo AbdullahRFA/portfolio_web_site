@@ -115,7 +115,9 @@ const CertificationShowcase = () => {
               onClick={() => setShowAllCertifications((prev) => !prev)}
               className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-zinc-900/90 px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-cyan-300 transition-all duration-300 hover:bg-cyan-500/10 hover:text-cyan-100"
             >
-              {showAllCertifications ? "See Less Certifications" : "See More Certifications"}
+              {showAllCertifications
+                ? "See Less Certifications"
+                : "See More Certifications"}
               <svg
                 className={`w-4 h-4 transition-transform duration-300 ${
                   showAllCertifications ? "rotate-180" : "rotate-0"
