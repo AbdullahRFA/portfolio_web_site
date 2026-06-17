@@ -74,18 +74,57 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md transition-all duration-300">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-        {/* Brand Logo - Video Matched Cyber Gradient Shadow */}
-        <a
-          href="#home"
-          onClick={(e) => handleScroll(e, "#home")}
-          className="text-lg font-black tracking-tight text-zinc-50 hover:text-cyan-400 transition-colors duration-300 group"
-        >
-          AN
-          <span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)] group-hover:text-fuchsia-400 transition-colors">
-            .
-          </span>
-          Sakib
-        </a>
+        {/* Profile Picture with Animation and Brand Logo */}
+        <div className="flex items-center gap-3">
+          {/* Circular Profile Picture with Rotation & Glow Animation */}
+          <motion.div
+            animate={{
+              rotate: 360,
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="relative"
+          >
+            {/* Glow pulse effect background */}
+            <motion.div
+              animate={{
+                boxShadow: [
+                  "0 0 10px rgba(34, 211, 238, 0.3)",
+                  "0 0 20px rgba(34, 211, 238, 0.6)",
+                  "0 0 10px rgba(34, 211, 238, 0.3)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+              className="absolute inset-0 rounded-full"
+            />
+
+            {/* Profile Image */}
+            <img
+              src="/profile_picture/profile_pic_2.jpg"
+              alt="Profile"
+              className="w-12 h-12 rounded-full border-2 border-cyan-400/50 object-cover relative z-10"
+            />
+          </motion.div>
+
+          {/* Brand Logo - Video Matched Cyber Gradient Shadow */}
+          <a
+            href="#home"
+            onClick={(e) => handleScroll(e, "#home")}
+            className="text-lg font-black tracking-tight text-zinc-50 hover:text-cyan-400 transition-colors duration-300 group"
+          >
+            AN
+            <span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)] group-hover:text-fuchsia-400 transition-colors">
+              .
+            </span>
+            Sakib
+          </a>
+        </div>
 
         {/* Desktop Navigation Links with Sliding Pill Overlays */}
         <div className="hidden md:flex items-center gap-6">
