@@ -32,6 +32,9 @@ const Hero = () => {
     };
   }, []);
 
+  const resumeUrl =
+    "https://github.com/AbdullahRFA/certs-and-awards/blob/main/Abdullah_Resume/Abdullah_Resume.pdf";
+
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
     targetId: string,
@@ -226,6 +229,28 @@ const Hero = () => {
               className="px-7 py-3.5 rounded-xl text-sm font-bold text-zinc-300 border border-zinc-800 bg-zinc-950/40 hover:bg-zinc-900 hover:text-zinc-100 hover:border-cyan-500/40 transition-all duration-300 shadow-xs text-center w-full sm:w-auto hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]"
             >
               Get In Touch
+            </a>
+
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-sm font-bold text-zinc-50 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-cyan-500/40 hover:text-cyan-200 transition-all duration-300 shadow-[0_0_25px_rgba(15,23,42,0.25)] w-full sm:w-auto gap-2"
+            >
+              Download Resume
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 3v12" />
+                <path d="M8 11l4 4 4-4" />
+                <path d="M4 19h16" />
+              </svg>
             </a>
           </motion.div>
         </motion.div>
