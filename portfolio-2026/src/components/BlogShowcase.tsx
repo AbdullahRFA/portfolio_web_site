@@ -1,13 +1,19 @@
 "use client"; // Required for click states, tab transitions, and list tracking running in-browser
 
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mockBlogPosts } from "../lib/blogData";
 import { IBlogPost } from "../types/blog";
 
 const BlogShowcase = () => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedPost, setSelectedPost] = useState<IBlogPost | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure modal only renders after hydration completes
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Dynamically compile a unique array list of active categories directly from your resume blog data assets
   const filterCategories = [
@@ -189,7 +195,7 @@ const BlogShowcase = () => {
       </motion.div>
 
       <AnimatePresence>
-        {selectedPost && (
+        {isMounted && selectedPost && (
           <motion.div
             variants={modalOverlayVariants}
             initial="hidden"

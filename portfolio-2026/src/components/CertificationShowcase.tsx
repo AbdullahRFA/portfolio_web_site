@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CertificationItem,
   certificationsData,
@@ -11,6 +11,12 @@ import {
 const CertificationShowcase = () => {
   const [selectedCertification, setSelectedCertification] =
     useState<CertificationItem | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure modal only renders after hydration completes
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <section
@@ -99,7 +105,7 @@ const CertificationShowcase = () => {
       </div>
 
       <AnimatePresence>
-        {selectedCertification && (
+        {isMounted && selectedCertification && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
