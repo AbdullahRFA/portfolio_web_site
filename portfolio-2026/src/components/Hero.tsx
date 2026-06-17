@@ -34,6 +34,9 @@ const Hero = () => {
 
   const resumeUrl =
     "https://github.com/AbdullahRFA/certs-and-awards/blob/main/Abdullah_Resume/Abdullah_Resume.pdf";
+  const resumeDownloadUrl = resumeUrl
+    .replace("https://github.com/", "https://raw.githubusercontent.com/")
+    .replace("/blob/", "/");
 
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -76,6 +79,27 @@ const Hero = () => {
       },
     },
   });
+
+  const downloadResume = async () => {
+    try {
+      const response = await fetch(resumeDownloadUrl);
+      if (!response.ok) {
+        throw new Error(`Download failed with status ${response.status}`);
+      }
+      const blob = await response.blob();
+      const downloadLink = document.createElement("a");
+      const objectUrl = URL.createObjectURL(blob);
+      downloadLink.href = objectUrl;
+      downloadLink.download = "Abdullah_Nazmus_Sakib_Resume.pdf";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
+      URL.revokeObjectURL(objectUrl);
+    } catch (error) {
+      console.error("Resume download failed:", error);
+      window.open(resumeUrl, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
     <section className="relative min-h-[85vh] flex flex-col justify-center py-16 overflow-visible">
@@ -231,10 +255,9 @@ const Hero = () => {
               Get In Touch
             </a>
 
-            <a
-              href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={downloadResume}
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-sm font-bold text-zinc-50 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-cyan-500/40 hover:text-cyan-200 transition-all duration-300 shadow-[0_0_25px_rgba(15,23,42,0.25)] w-full sm:w-auto gap-2"
             >
               Download Resume
@@ -251,7 +274,7 @@ const Hero = () => {
                 <path d="M8 11l4 4 4-4" />
                 <path d="M4 19h16" />
               </svg>
-            </a>
+            </button>
           </motion.div>
         </motion.div>
 
