@@ -1,7 +1,6 @@
 "use client"; // Required since we manage viewport-triggered animation sequences running in-browser[cite: 1]
 
 import { motion, Variants } from "framer-motion";
-import { skillsData } from "../lib/skillsData";
 
 const SkillsBento = () => {
   // Stagger cascading presentation layout orchestrations[cite: 1]
@@ -39,6 +38,86 @@ const SkillsBento = () => {
     },
   };
 
+  const skillCategories = [
+    {
+      title: "Languages",
+      description:
+        "Compiled and scripting languages that power fast, cross-platform apps.",
+      icon: "https://img.icons8.com/fluency/48/code.png",
+      skills: [
+        { name: "C/C++", level: "Advanced" },
+        { name: "Python", level: "Advanced" },
+        { name: "Java", level: "Proficient" },
+        { name: "JavaScript", level: "Advanced" },
+        { name: "Dart", level: "Proficient" },
+        { name: "SQL", level: "Proficient" },
+      ],
+    },
+    {
+      title: "Frameworks",
+      description:
+        "Modern UI, backend, and full-stack libraries I use for polished products.",
+      icon: "https://img.icons8.com/fluency/48/source-code.png",
+      skills: [
+        { name: "CSS", level: "Advanced" },
+        { name: "Tailwind", level: "Advanced" },
+        { name: "Bootstrap", level: "Advanced" },
+        { name: "React", level: "Advanced" },
+        { name: "Redux", level: "Proficient" },
+        { name: "Flask", level: "Proficient" },
+        { name: "Django", level: "Proficient" },
+      ],
+    },
+    {
+      title: "App Development",
+      description:
+        "Mobile-first and cross-platform experiences built with a single codebase.",
+      icon: "https://img.icons8.com/fluency/48/flutter.png",
+      skills: [{ name: "Flutter", level: "Proficient" }],
+    },
+    {
+      title: "Platforms & Tools",
+      description:
+        "Dev tools, IDEs, device stacks, and deployment systems I depend on.",
+      icon: "https://img.icons8.com/fluency/48/toolbox.png",
+      skills: [
+        { name: "Git", level: "Advanced" },
+        { name: "GitHub", level: "Advanced" },
+        { name: "Overleaf", level: "Proficient" },
+        { name: "NetBeans", level: "Proficient" },
+        { name: "Blynk", level: "Proficient" },
+        { name: "VS Code", level: "Advanced" },
+        { name: "Linux", level: "Proficient" },
+        { name: "XAMPP", level: "Proficient" },
+        { name: "Arduino", level: "Proficient" },
+        { name: "ESP32", level: "Proficient" },
+        { name: "Docker", level: "Proficient" },
+      ],
+    },
+    {
+      title: "Soft Skills",
+      description:
+        "Human-first strengths that complement my technical engineering work.",
+      icon: "https://img.icons8.com/fluency/48/handshake.png",
+      skills: [
+        { name: "Adaptability", level: "Strong" },
+        { name: "Critical Thinking", level: "Strong" },
+        { name: "Teamwork", level: "Strong" },
+        { name: "Time Management", level: "Strong" },
+      ],
+    },
+    {
+      title: "Database",
+      description:
+        "Relational data engines I design, query, and optimize for production.",
+      icon: "https://img.icons8.com/fluency/48/database.png",
+      skills: [
+        { name: "MySQL", level: "Proficient" },
+        { name: "PostgreSQL", level: "Proficient" },
+      ],
+    },
+  ];
+
   return (
     <section
       id="skills"
@@ -67,9 +146,9 @@ const SkillsBento = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }} //[cite: 1]
-        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]"
+        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-[220px]"
       >
-        {skillsData.map((category, index) => (
+        {skillCategories.map((category, index) => (
           <motion.div
             key={category.title}
             variants={cardVariants}
@@ -77,33 +156,40 @@ const SkillsBento = () => {
             whileHover={{
               y: -6,
               scale: 1.02,
-              boxShadow: "0 16px 50px rgba(232, 121, 249, 0.12)",
+              boxShadow: "0 24px 70px rgba(232, 121, 249, 0.14)",
               transition: { duration: 0.25, ease: "easeOut" },
             }}
             whileTap={{ scale: 0.99 }}
-            className={`p-6 rounded-3xl border border-zinc-800 ${category.gridClass} backdrop-blur-md flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-[0_0_25px_rgba(232,121,249,0.08)] hover:border-fuchsia-500/20 group overflow-hidden relative`}
+            className="p-6 rounded-3xl border border-zinc-800 backdrop-blur-md flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-[0_0_25px_rgba(232,121,249,0.08)] hover:border-fuchsia-500/20 group overflow-hidden relative"
           >
             {/* Subtle Hover Spotlight */}
             <div className="absolute -top-12 -right-12 h-24 w-24 rounded-full bg-fuchsia-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-            {/* Top Typography Header Info Area[cite: 1] */}
-            <div>
-              <motion.h3
-                variants={textVariants}
-                className="text-lg font-bold text-zinc-100 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-fuchsia-400 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300 tracking-tight"
-              >
-                {category.title}
-              </motion.h3>
-              <motion.p
-                variants={textVariants}
-                className="text-xs text-zinc-400 leading-relaxed max-w-sm mt-1 font-normal"
-              >
-                {category.description}
-              </motion.p>
+            {/* Icon and Header */}
+            <div className="relative z-10 flex items-start gap-3">
+              <img
+                src={category.icon}
+                alt={`${category.title} icon`}
+                className="h-12 w-12 rounded-2xl bg-zinc-950 p-2 shadow-inner"
+              />
+              <div>
+                <motion.h3
+                  variants={textVariants}
+                  className="text-lg font-bold text-zinc-100 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-fuchsia-400 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300 tracking-tight"
+                >
+                  {category.title}
+                </motion.h3>
+                <motion.p
+                  variants={textVariants}
+                  className="text-xs text-zinc-400 leading-relaxed max-w-sm mt-1 font-normal"
+                >
+                  {category.description}
+                </motion.p>
+              </div>
             </div>
 
             {/* Bottom Badges Sub-Grid Wrap Area[cite: 1] */}
-            <div className="flex flex-wrap gap-1.5 mt-auto pt-4 border-t border-zinc-800/60 group-hover:border-fuchsia-500/10 transition-colors duration-300">
+            <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-zinc-800/60 group-hover:border-fuchsia-500/10 transition-colors duration-300">
               {category.skills.map((skill) => (
                 <div
                   key={skill.name}
