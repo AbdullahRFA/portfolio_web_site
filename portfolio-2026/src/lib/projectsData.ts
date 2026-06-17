@@ -33,5 +33,5 @@ export const mockProjects: IProjectCaseStudy[] = [
     githubUrl: 'https://github.com/yourusername/crypto-dash',
     liveUrl: '#',
     image: '/projects/crypto.png'
-  }
+  },
 ];

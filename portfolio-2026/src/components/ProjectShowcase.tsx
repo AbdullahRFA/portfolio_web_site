@@ -12,6 +12,9 @@ const ProjectShowcase = () => {
   >("All");
   const [selectedProject, setSelectedProject] =
     useState<IProjectCaseStudy | null>(null);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+
+  const projectsToShow = 6;
 
   const categories = [
     "All",
@@ -36,6 +39,10 @@ const ProjectShowcase = () => {
       );
     return true;
   });
+
+  const visibleProjects = showAllProjects
+    ? filteredProjects
+    : filteredProjects.slice(0, projectsToShow);
 
   const cardContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -115,7 +122,7 @@ const ProjectShowcase = () => {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => (
+          {visibleProjects.map((project) => (
             <motion.div
               layout
               variants={cardVariants}
@@ -179,6 +186,31 @@ const ProjectShowcase = () => {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {filteredProjects.length > projectsToShow && (
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAllProjects((prev) => !prev)}
+            className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-zinc-900/90 px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-cyan-300 transition-all duration-300 hover:bg-cyan-500/10 hover:text-cyan-100"
+          >
+            {showAllProjects ? "See Less Projects" : "See More Projects"}
+            <svg
+              className={`w-4 h-4 transition-transform duration-300 ${
+                showAllProjects ? "rotate-180" : "rotate-0"
+              }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        </div>
+      )}
 
       {/* Immersive Case Study Modal View Overlay Layer */}
       <AnimatePresence>
