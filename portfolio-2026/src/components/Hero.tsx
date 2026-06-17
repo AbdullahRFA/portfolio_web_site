@@ -102,8 +102,23 @@ const Hero = () => {
   };
 
   const rollingSkills = [
-    "React.js", "Next.js", "Node.js", "Express.js", "MongoDB", "MySQL", "PostgreSQL",
-    "Flutter", "Dart", "Python", "Django", "FastAPI", "RestAPI", "C/C++", "Java", "Git", "Tailwind CSS"
+    "React.js",
+    "Next.js",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "MySQL",
+    "PostgreSQL",
+    "Flutter",
+    "Dart",
+    "Python",
+    "Django",
+    "FastAPI",
+    "RestAPI",
+    "C/C++",
+    "Java",
+    "Git",
+    "Tailwind CSS",
   ];
 
   return (
@@ -164,25 +179,51 @@ const Hero = () => {
             variants={itemVariants}
             className="text-base text-zinc-300 font-normal leading-relaxed max-w-2xl"
           >
-            Building reliable software through <span className="font-bold text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text drop-shadow-[0_0_8px_rgba(34,211,238,0.2)]">full-stack development</span>, mobile applications, <span className="font-bold text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-fuchsia-400 bg-clip-text drop-shadow-[0_0_10px_rgba(6,182,212,0.2)]">AI solutions</span>, and <span className="font-bold text-transparent bg-gradient-to-r from-fuchsia-400 to-pink-400 bg-clip-text drop-shadow-[0_0_8px_rgba(232,121,249,0.2)]">quality engineering</span>. Passionate about turning ideas into real-world impact.
+            Building reliable software through{" "}
+            <span className="font-bold text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text drop-shadow-[0_0_8px_rgba(34,211,238,0.2)]">
+              full-stack development
+            </span>
+            , mobile applications,{" "}
+            <span className="font-bold text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-fuchsia-400 bg-clip-text drop-shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+              AI solutions
+            </span>
+            , and{" "}
+            <span className="font-bold text-transparent bg-gradient-to-r from-fuchsia-400 to-pink-400 bg-clip-text drop-shadow-[0_0_8px_rgba(232,121,249,0.2)]">
+              quality engineering
+            </span>
+            . Passionate about turning ideas into real-world impact.
           </motion.p>
 
           {/* --- HORIZONTAL SKILLS MARQUEE TICKER --- */}
-          <motion.div variants={itemVariants} className="w-full overflow-hidden py-3 relative border-y border-zinc-900/60 bg-zinc-950/20 max-w-xl rounded-xl">
+          <motion.div
+            variants={itemVariants}
+            className="w-full overflow-hidden py-3 relative border-y border-zinc-900/60 bg-zinc-950/20 max-w-xl rounded-xl"
+          >
             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
             <div className="flex gap-8 whitespace-nowrap animate-marquee">
               <div className="flex gap-8 shrink-0 justify-around min-w-full animate-marquee">
                 {rollingSkills.map((skill, idx) => (
-                  <span key={`roll-1-${idx}`} className="text-xs font-extrabold tracking-widest uppercase text-zinc-500 hover:text-cyan-400 transition-colors duration-200">
-                    {skill} <span className="text-zinc-800 ml-6 select-none">•</span>
+                  <span
+                    key={`roll-1-${idx}`}
+                    className="text-xs font-extrabold tracking-widest uppercase text-zinc-500 hover:text-cyan-400 transition-colors duration-200"
+                  >
+                    {skill}{" "}
+                    <span className="text-zinc-800 ml-6 select-none">•</span>
                   </span>
                 ))}
               </div>
-              <div className="flex gap-8 shrink-0 justify-around min-w-full animate-marquee" aria-hidden="true">
+              <div
+                className="flex gap-8 shrink-0 justify-around min-w-full animate-marquee"
+                aria-hidden="true"
+              >
                 {rollingSkills.map((skill, idx) => (
-                  <span key={`roll-2-${idx}`} className="text-xs font-extrabold tracking-widest uppercase text-zinc-500 hover:text-cyan-400 transition-colors duration-200">
-                    {skill} <span className="text-zinc-800 ml-6 select-none">•</span>
+                  <span
+                    key={`roll-2-${idx}`}
+                    className="text-xs font-extrabold tracking-widest uppercase text-zinc-500 hover:text-cyan-400 transition-colors duration-200"
+                  >
+                    {skill}{" "}
+                    <span className="text-zinc-800 ml-6 select-none">•</span>
                   </span>
                 ))}
               </div>
@@ -303,39 +344,69 @@ const Hero = () => {
 
         {/* --- RIGHT COLUMN: CLEAN RE-POSITIONED MASTER FOCUS BADGES --- */}
         <div className="lg:col-span-5 relative flex justify-center lg:justify-end mt-12 lg:mt-0">
-          
           {/* Badge 1: Next.js Architecture */}
-          <motion.div 
-            variants={floatAnimation(0)} initial="initial" animate="animate"
+          <motion.div
+            variants={floatAnimation(0)}
+            initial="initial"
+            animate="animate"
             className="absolute -top-6 left-6 lg:-left-4 z-25 bg-zinc-900/90 backdrop-blur-md border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
           >
             <div className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]" />
-            <span className="text-xs font-bold text-zinc-200">Next.js / MERN</span>
+            <span className="text-xs font-bold text-zinc-200">
+              Next.js / MERN
+            </span>
           </motion.div>
 
           {/* Badge 2: Cross-Platform Mobile */}
-          <motion.div 
-            variants={floatAnimation(0.8)} initial="initial" animate="animate"
+          <motion.div
+            variants={floatAnimation(0.8)}
+            initial="initial"
+            animate="animate"
             className="absolute top-[45%] -left-12 z-25 bg-zinc-900/90 backdrop-blur-md border border-fuchsia-500/20 shadow-[0_0_15px_rgba(240,147,251,0.15)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
           >
             <div className="h-2 w-2 rounded-full bg-fuchsia-400 shadow-[0_0_8px_#f093fb]" />
-            <span className="text-xs font-bold text-zinc-200">Flutter App Dev</span>
+            <span className="text-xs font-bold text-zinc-200">
+              Flutter App Dev
+            </span>
           </motion.div>
 
           {/* Badge 3: Intelligence & Core Engineering */}
-          <motion.div 
-            variants={floatAnimation(1.6)} initial="initial" animate="animate"
+          <motion.div
+            variants={floatAnimation(1.6)}
+            initial="initial"
+            animate="animate"
             className="absolute bottom-4 right-6 lg:-right-4 z-25 bg-zinc-900/90 backdrop-blur-md border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
           >
             <div className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]" />
-            <span className="text-xs font-bold text-zinc-200">AI/ML & Core Engine</span>
+            <span className="text-xs font-bold text-zinc-200">
+              AI/ML & Core Engine
+            </span>
+          </motion.div>
+
+          {/* Badge 4: SQA for Manual and Automated Testing */}
+          <motion.div
+            variants={floatAnimation(2.4)} // Updated: Staggered animation delay
+            initial="initial"
+            animate="animate"
+            // Updated: Moved to top-right to balance layout and prevent overlap
+            className="absolute top-12 right-4 lg:-right-19 z-25 bg-zinc-900/90 backdrop-blur-md border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
+          >
+            <div className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]" />
+            <span className="text-xs font-bold text-zinc-200">
+              SQA & Automated Testing
+            </span>
           </motion.div>
 
           {/* Primary Portrait Card Container Shell */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, rotate: -1 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.3 }}
+            transition={{
+              type: "spring",
+              stiffness: 50,
+              damping: 20,
+              delay: 0.3,
+            }}
             className="relative w-full max-w-[290px] sm:max-w-[320px] aspect-[3/4] rounded-[2.5rem] flex items-center justify-center group overflow-visible z-10 shadow-2xl"
           >
             {/* Spinning Gradient Outlining Mask Frame */}
