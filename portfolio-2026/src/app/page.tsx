@@ -1,19 +1,24 @@
-import AboutSection from '../components/AboutSection'; 
-import SkillsBento from '../components/SkillsBento'; 
-import ContactForm from '../components/ContactForm'; 
-import Hero from '../components/Hero'; 
-import ProjectShowcase from '../components/ProjectShowcase'; 
-import BlogShowcase from '../components/BlogShowcase'; 
-import Guestbook from '../components/Guestbook'; 
+import AboutSection from "../components/AboutSection";
+import BlogShowcase from "../components/BlogShowcase";
+import CertificationShowcase from "../components/CertificationShowcase";
+import ContactForm from "../components/ContactForm";
+import Guestbook from "../components/Guestbook";
+import Hero from "../components/Hero";
+import ProjectShowcase from "../components/ProjectShowcase";
+import SkillsBento from "../components/SkillsBento";
 
 export default async function Home() {
   return (
     // FIXED: Swapped space-y-24 to space-y-6 to prevent margin-stacking inflation between your components
     <main className="max-w-6xl mx-auto px-6 pb-20 space-y-2 ">
-      
       {/* 3.1 Refined Interactive Hero Section */}
       <div id="home" className="scroll-mt-24">
         <Hero />
+      </div>
+
+      {/* 3.2 & 3.4 About Section / Experience Timeline Anchor Target */}
+      <div id="about" className="scroll-mt-20">
+        <AboutSection />
       </div>
 
       {/* 3.5 Project Showcase Module with Layout Filtering & Modals */}
@@ -24,15 +29,15 @@ export default async function Home() {
         <SkillsBento />
       </div>
 
-      {/* 3.6 Blog Module Integration Element */}
+      {/* 3.6 Certifications Showcase Anchor Target */}
+      <div id="certifications" className="scroll-mt-20">
+        <CertificationShowcase />
+      </div>
+
+      {/* 3.7 Blog Module Integration Element */}
       <div id="blog" className="scroll-mt-20">
         <BlogShowcase />
       </div>
-
-      {/* 3.2 & 3.4 About Section / Experience Timeline Anchor Target */}
-      <div id="about" className="scroll-mt-20">
-        <AboutSection />
-      </div> 
 
       {/* 3.8 Guestbook Module Anchor Section */}
       <div id="guestbook" className="scroll-mt-20">
@@ -43,7 +48,6 @@ export default async function Home() {
       <div id="contact" className="scroll-mt-20">
         <ContactForm />
       </div>
-
     </main>
   );
 }
