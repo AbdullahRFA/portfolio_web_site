@@ -1,6 +1,7 @@
 "use client"; // Required since we weave in scroll-triggered structural motion variants
 
-import { motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
+import { useState } from "react";
 import { experienceData } from "../lib/aboutData";
 import Timeline from "./Timeline";
 
@@ -42,6 +43,10 @@ const AboutSection = () => {
       transition: { duration: 0.4, ease: "easeOut" },
     },
   };
+
+  const [activeTab, setActiveTab] = useState<"experience" | "education">(
+    "experience",
+  );
 
   return (
     <section
@@ -152,118 +157,149 @@ const AboutSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="lg:col-span-7 space-y-6"
         >
-          <div className="px-2 mb-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-fuchsia-400 drop-shadow-[0_0_10px_rgba(232,121,249,0.3)]">
-              Chronological Path
-            </span>
-            <h3 className="text-2xl font-bold text-zinc-100 mt-1 tracking-tight">
-              Professional Experience
-            </h3>
-          </div>
-
-          <motion.div
-            whileHover={{
-              y: -2,
-              transition: { duration: 0.2, ease: "easeOut" },
-            }}
-            className="bg-zinc-900/40 p-2 md:p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md"
-          >
-            <Timeline items={experienceData} />
-          </motion.div>
-
-          <div className="px-2 mt-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">
-              Academic Record
-            </span>
-            <h3 className="text-2xl font-bold text-zinc-100 mt-1 tracking-tight">
-              Education
-            </h3>
-          </div>
-
-          <motion.div
-            whileHover={{
-              y: -1,
-              transition: { duration: 0.2, ease: "easeOut" },
-            }}
-            className="bg-zinc-900/40 p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md space-y-5"
-          >
-            <article className="rounded-3xl border border-zinc-800 bg-zinc-950/70 p-6">
-              <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start">
-                <div>
-                  <h4 className="text-xl font-bold text-zinc-100">
-                    Jahangirnagar University • Bachelor of Science - BS,
-                    Computer Science
-                  </h4>
-                  <p className="text-sm font-semibold text-cyan-400 mt-1">
-                    Mar 2022 – Mar 2026
-                  </p>
-                </div>
-                <a
-                  href="https://www.linkedin.com/in/abdullahrfa/details/education/edit/forms/980889716/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs uppercase tracking-[0.26em] font-bold text-zinc-500 hover:text-cyan-400 transition-colors"
-                >
-                  View on LinkedIn
-                </a>
+          <div className="px-2 mb-4">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest text-fuchsia-400 drop-shadow-[0_0_10px_rgba(232,121,249,0.3)]">
+                  Chronological Path
+                </span>
+                <h3 className="text-2xl font-bold text-zinc-100 mt-1 tracking-tight">
+                  Career & Education
+                </h3>
               </div>
 
-              <p className="text-zinc-400 text-sm leading-relaxed mt-4">
-                I&apos;m currently a fourth-year student at Jahangirnagar
-                University, majoring in Computer Science and Engineering. My
-                time here has been an incredible journey of growth, both
-                academically and personally. The university offers a rich
-                learning environment, where I&apos;m not only gaining technical
-                skills but also engaging in research and projects that push my
-                creativity and problem-solving abilities. It&apos;s a place
-                where I&apos;m shaping my future and preparing to make a
-                meaningful impact in the world of technology.
-              </p>
-
-              <p className="text-xs text-zinc-500 mt-4">
-                Skills: HTML5, Cascading Style Sheets (CSS) and +12 skills
-              </p>
-            </article>
-
-            <article className="rounded-3xl border border-zinc-800 bg-zinc-950/70 p-6">
-              <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start">
-                <div>
-                  <h4 className="text-xl font-bold text-zinc-100">
-                    Nawab Siraj-Ud-Dowla Government College, Natore
-                  </h4>
-                  <p className="text-sm font-semibold text-cyan-400 mt-1">
-                    H.S.C, Science • Jan 2018 – Jan 2020
-                  </p>
-                </div>
-                <a
-                  href="https://www.linkedin.com/in/abdullahrfa/details/education/edit/forms/1032951628/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs uppercase tracking-[0.26em] font-bold text-zinc-500 hover:text-cyan-400 transition-colors"
+              <div className="inline-flex rounded-full bg-zinc-950/70 border border-zinc-800 p-1 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("experience")}
+                  className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] transition-all duration-200 ${
+                    activeTab === "experience"
+                      ? "bg-linear-to-r from-fuchsia-500 to-cyan-500 text-zinc-950 shadow-[0_0_20px_rgba(232,121,249,0.18)]"
+                      : "text-zinc-400 hover:bg-zinc-900/70 hover:text-zinc-100"
+                  }`}
                 >
-                  View on LinkedIn
-                </a>
+                  Professional Experience
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("education")}
+                  className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] transition-all duration-200 ${
+                    activeTab === "education"
+                      ? "bg-linear-to-r from-emerald-500 to-cyan-400 text-zinc-950 shadow-[0_0_20px_rgba(52,211,153,0.18)]"
+                      : "text-zinc-400 hover:bg-zinc-900/70 hover:text-zinc-100"
+                  }`}
+                >
+                  Academic Record
+                </button>
               </div>
+            </div>
+          </div>
 
-              <p className="text-zinc-400 text-sm leading-relaxed mt-4">
-                Grade: 5.00. At Nawab Siraj-Ud-Dowla Government College, Natore,
-                I actively participated in various societies and activities. I
-                was a member of the Debating Society, honed my public speaking
-                skills, and took part in cultural events like drama and music. I
-                also participated in sports, promoted physical fitness, and
-                engaged in volunteer work for social causes.
-              </p>
+          <AnimatePresence mode="wait">
+            {activeTab === "experience" ? (
+              <motion.div
+                key="experience"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                whileHover={{
+                  y: -2,
+                  transition: { duration: 0.2, ease: "easeOut" },
+                }}
+                className="bg-zinc-900/40 p-2 md:p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md"
+              >
+                <Timeline items={experienceData} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="education"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="bg-zinc-900/40 p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md space-y-5"
+              >
+                <article className="rounded-3xl border border-zinc-800 bg-zinc-950/70 p-6">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start">
+                    <div>
+                      <h4 className="text-xl font-bold text-zinc-100">
+                        Jahangirnagar University • Bachelor of Science - BS,
+                        Computer Science
+                      </h4>
+                      <p className="text-sm font-semibold text-cyan-400 mt-1">
+                        Mar 2022 – Mar 2026
+                      </p>
+                    </div>
+                    <a
+                      href="https://www.linkedin.com/in/abdullahrfa/details/education/edit/forms/980889716/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs uppercase tracking-[0.26em] font-bold text-zinc-500 hover:text-cyan-400 transition-colors"
+                    >
+                      View on LinkedIn
+                    </a>
+                  </div>
 
-              <p className="text-zinc-400 text-sm leading-relaxed mt-3">
-                During my time there, I experienced a vibrant and enriching
-                college life. The college provided an excellent academic
-                environment, with dedicated faculty members who helped me grow
-                intellectually and personally. I engaged in extracurricular
-                activities, made lasting friendships, gained leadership
-                experience, and enjoyed a campus with historical charm.
-              </p>
-            </article>
-          </motion.div>
+                  <p className="text-zinc-400 text-sm leading-relaxed mt-4">
+                    I&apos;m currently a fourth-year student at Jahangirnagar
+                    University, majoring in Computer Science and Engineering. My
+                    time here has been an incredible journey of growth, both
+                    academically and personally. The university offers a rich
+                    learning environment, where I&apos;m not only gaining
+                    technical skills but also engaging in research and projects
+                    that push my creativity and problem-solving abilities.
+                    It&apos;s a place where I&apos;m shaping my future and
+                    preparing to make a meaningful impact in the world of
+                    technology.
+                  </p>
+
+                  <p className="text-xs text-zinc-500 mt-4">
+                    Skills: HTML5, Cascading Style Sheets (CSS) and +12 skills
+                  </p>
+                </article>
+
+                <article className="rounded-3xl border border-zinc-800 bg-zinc-950/70 p-6">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start">
+                    <div>
+                      <h4 className="text-xl font-bold text-zinc-100">
+                        Nawab Siraj-Ud-Dowla Government College, Natore
+                      </h4>
+                      <p className="text-sm font-semibold text-cyan-400 mt-1">
+                        H.S.C, Science • Jan 2018 – Jan 2020
+                      </p>
+                    </div>
+                    <a
+                      href="https://www.linkedin.com/in/abdullahrfa/details/education/edit/forms/1032951628/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs uppercase tracking-[0.26em] font-bold text-zinc-500 hover:text-cyan-400 transition-colors"
+                    >
+                      View on LinkedIn
+                    </a>
+                  </div>
+
+                  <p className="text-zinc-400 text-sm leading-relaxed mt-4">
+                    Grade: 5.00. At Nawab Siraj-Ud-Dowla Government College,
+                    Natore, I actively participated in various societies and
+                    activities. I was a member of the Debating Society, honed my
+                    public speaking skills, and took part in cultural events
+                    like drama and music. I also participated in sports,
+                    promoted physical fitness, and engaged in volunteer work for
+                    social causes.
+                  </p>
+
+                  <p className="text-zinc-400 text-sm leading-relaxed mt-3">
+                    During my time there, I experienced a vibrant and enriching
+                    college life. The college provided an excellent academic
+                    environment, with dedicated faculty members who helped me
+                    grow intellectually and personally. I engaged in
+                    extracurricular activities, made lasting friendships, gained
+                    leadership experience, and enjoyed a campus with historical
+                    charm.
+                  </p>
+                </article>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
