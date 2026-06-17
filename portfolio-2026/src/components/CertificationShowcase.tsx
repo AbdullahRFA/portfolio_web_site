@@ -12,6 +12,11 @@ const CertificationShowcase = () => {
   const [selectedCertification, setSelectedCertification] =
     useState<CertificationItem | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [showAllCertifications, setShowAllCertifications] = useState(false);
+
+  const visibleCertifications = showAllCertifications
+    ? certificationsData
+    : certificationsData.slice(0, 3);
 
   // Ensure modal only renders after hydration completes
   useEffect(() => {
@@ -53,7 +58,7 @@ const CertificationShowcase = () => {
         </div>
 
         <div className="grid gap-6 xl:grid-cols-3">
-          {certificationsData.map((certification) => (
+          {visibleCertifications.map((certification) => (
             <motion.article
               key={certification.id}
               whileHover={{ y: -8, scale: 1.01 }}
@@ -102,6 +107,31 @@ const CertificationShowcase = () => {
             </motion.article>
           ))}
         </div>
+
+        {certificationsData.length > 3 && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAllCertifications((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-zinc-900/90 px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-cyan-300 transition-all duration-300 hover:bg-cyan-500/10 hover:text-cyan-100"
+            >
+              {showAllCertifications ? "See Less Certifications" : "See More Certifications"}
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  showAllCertifications ? "rotate-180" : "rotate-0"
+                }`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
