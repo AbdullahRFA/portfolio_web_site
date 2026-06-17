@@ -1,11 +1,14 @@
 export interface CertificationItem {
   id: string;
   title: string;
+  description: string;
   issuer: string;
-  date: string;
+  issueDate: string;
+  expireDate: string;
+  credentialId?: string;
+  credentialUrl: string;
+  photos: string[];
   platform: string;
-  summary: string;
-  link: string;
   tags: string[];
 }
 
@@ -13,34 +16,52 @@ export const certificationsData: CertificationItem[] = [
   {
     id: "cert-1",
     title: "Modern Web Portfolio Design",
+    description:
+      "Completed a hands-on portfolio design course with responsive web UI, motion, and accessibility best practices.",
     issuer: "LinkedIn Learning",
-    date: "Jun 2025",
+    issueDate: "Jun 2025",
+    expireDate: "No expiration",
+    credentialId: undefined,
+    credentialUrl: "https://www.linkedin.com/in/abdullahrfa/",
     platform: "LinkedIn",
-    summary:
-      "Designed and deployed an interactive portfolio experience with responsive layouts, motion-driven states, and accessible UI components.",
-    link: "https://www.linkedin.com/in/abdullahrfa/",
+    photos: [
+      "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
+    ],
     tags: ["Responsive UI", "Accessibility", "Motion", "Portfolio"],
   },
   {
     id: "cert-2",
     title: "HTML5, CSS3 & Advanced Styling",
+    description:
+      "Achieved certification in modern web markup and styling, including advanced layout techniques and reusable visual systems.",
     issuer: "LinkedIn Learning",
-    date: "Mar 2025",
+    issueDate: "Mar 2025",
+    expireDate: "No expiration",
+    credentialId: undefined,
+    credentialUrl: "https://www.linkedin.com/in/abdullahrfa/",
     platform: "LinkedIn",
-    summary:
-      "Mastered modern markup and styling workflows, including grid-based layouts, custom animations, and reusable design systems.",
-    link: "https://www.linkedin.com/in/abdullahrfa/",
+    photos: [
+      "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    ],
     tags: ["HTML5", "CSS3", "Responsive Design", "Visual UX"],
   },
   {
     id: "cert-3",
     title: "Python for Data Science",
+    description:
+      "Completed a data science certification covering Python analytics, data pipelines, and reproducible code practices.",
     issuer: "Coursera",
-    date: "Jan 2025",
+    issueDate: "Jan 2025",
+    expireDate: "No expiration",
+    credentialId: undefined,
+    credentialUrl: "https://www.linkedin.com/in/abdullahrfa/",
     platform: "Coursera",
-    summary:
-      "Built data-driven solutions and analytics pipelines using Python libraries while preserving clean code and reproducibility.",
-    link: "https://www.linkedin.com/in/abdullahrfa/",
+    photos: [
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517430816045-df4b7de6f9a1?auto=format&fit=crop&w=1200&q=80",
+    ],
     tags: ["Python", "Data Analysis", "Pandas", "Jupyter"],
   },
 ];
