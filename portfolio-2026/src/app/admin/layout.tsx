@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Required for click states, tab transitions, and list tracking running in-browser
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Home Page Config", path: "/admin" },
     { name: "Projects", path: "/admin/projects" },
     { name: "Experiences", path: "/admin/experiences" },
+    { name: "Manage Education", path: "/admin/education" }, // Added Education link
     { name: "Blogs", path: "/admin/blogs" },
     { name: "Skills", path: "/admin/skills" },
     { name: "Certifications", path: "/admin/certifications" },
@@ -30,19 +31,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-zinc-950 flex flex-col md:flex-row">
       {/* Sidebar */}
       <aside className="w-full md:w-64 border-r border-zinc-800 bg-zinc-900/50 p-6 flex flex-col h-auto md:h-screen sticky top-0">
-        <h2 className="text-xl font-black text-cyan-400 tracking-tight mb-8 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]">Admin Terminal</h2>
+        <h2 className="text-xl font-black text-cyan-400 tracking-tight mb-8 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]">
+          Admin Terminal
+        </h2>
         <nav className="flex-1 space-y-2">
           {menu.map((item) => (
-            <Link key={item.name} href={item.path}
+            <Link 
+              key={item.name} 
+              href={item.path}
               className={`block px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
-                pathname === item.path ? "bg-zinc-800 text-zinc-50 border border-zinc-700" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900"
+                pathname === item.path 
+                  ? "bg-zinc-800 text-zinc-50 border border-zinc-700" 
+                  : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900"
               }`}
             >
               {item.name}
             </Link>
           ))}
         </nav>
-        <button onClick={handleLogout} className="mt-8 px-4 py-2 text-sm font-bold text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl hover:bg-red-400/20 text-left">
+        <button 
+          onClick={handleLogout} 
+          className="mt-8 px-4 py-2 text-sm font-bold text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl hover:bg-red-400/20 text-left"
+        >
           Disconnect Session
         </button>
       </aside>

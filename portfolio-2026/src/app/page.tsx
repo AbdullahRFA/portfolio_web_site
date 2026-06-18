@@ -1,3 +1,4 @@
+import { supabase } from "../lib/supabase";
 import AboutSection from "../components/AboutSection";
 import BlogShowcase from "../components/BlogShowcase";
 import CertificationShowcase from "../components/CertificationShowcase";
@@ -6,10 +7,8 @@ import Guestbook from "../components/Guestbook";
 import Hero from "../components/Hero";
 import ProjectShowcase from "../components/ProjectShowcase";
 import SkillsBento from "../components/SkillsBento";
+import Navbar from "../components/Navbar"; // Assuming you want this uncommented
 import Link from "next/link";
-
-import { supabase } from "../lib/supabase";
-
 
 export default async function Home() {
   // Fetch all your public data in parallel directly from Supabase
@@ -17,17 +16,21 @@ export default async function Home() {
     { data: projects },
     { data: blogs },
     { data: skills },
-    { data: certs }
+    { data: certs },
+    { data: experiences },
+    { data: education }
   ] = await Promise.all([
     supabase.from('projects').select('*').order('created_at', { ascending: false }),
     supabase.from('blogs').select('*').order('created_at', { ascending: false }),
     supabase.from('skills').select('*').order('created_at', { ascending: true }),
     supabase.from('certifications').select('*').order('created_at', { ascending: false }),
+    supabase.from('experiences').select('*').order('created_at', { ascending: false }),
+    supabase.from('education').select('*').order('created_at', { ascending: false }),
   ]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50">
-      {/* <Navbar /> */}
+      <Navbar />
       
       <main className="max-w-6xl mx-auto px-6 pb-20 space-y-2">
         
@@ -35,11 +38,15 @@ export default async function Home() {
           <Hero />
         </div>
 
+        {/* Passing live Supabase data to AboutSection */}
         <div id="about" className="scroll-mt-20">
-          <AboutSection />
+          <AboutSection 
+            experiences={experiences || []} 
+            education={education || []} 
+          />
         </div>
 
-        {/* Passing live Supabase data to components */}
+        {/* Passing live Supabase data to other sections */}
         <ProjectShowcase projects={projects || []} />
 
         <div id="skills" className="scroll-mt-20">
@@ -55,7 +62,6 @@ export default async function Home() {
         </div>
 
         <div id="guestbook" className="scroll-mt-20">
-          {/* Guestbook will be handled differently because it needs a form submission */}
           <Guestbook />
         </div>
 
