@@ -3,28 +3,25 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  
-  // Define our protected routes
-  const isAdminPath = path.startsWith('/admin');
-  const isLoginPath = path === '/admin/login';
-  
-  // Check for the authentication cookie
-  const isAuthenticated = request.cookies.get('admin_auth')?.value === 'true';
 
-  // If user is trying to access ANY admin route (except login) and is NOT authenticated
-  if (isAdminPath && !isLoginPath && !isAuthenticated) {
-    return NextResponse.redirect(new URL('/admin/login', request.url));
+  // We manually check the path inside the function instead of using the config matcher
+  if (path.startsWith('/admin')) {
+    const isLoginPath = path === '/admin/login';
+    const isAuthenticated = request.cookies.get('admin_auth')?.value === 'true';
+
+    // 1. If trying to access admin without a cookie -> Send to login
+    if (!isLoginPath && !isAuthenticated) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+
+    // 2. If trying to access login page while already logged in -> Send to dashboard
+    if (isLoginPath && isAuthenticated) {
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
   }
 
-  // If user is already authenticated and tries to visit the login page, send them to the dashboard
-  if (isLoginPath && isAuthenticated) {
-    return NextResponse.redirect(new URL('/admin', request.url));
-  }
-
+  // Allow all other routes to pass through normally
   return NextResponse.next();
 }
 
-export const config = {
-  // Bulletproof matcher: Catches the exact /admin route AND any nested /admin/... routes
-  matcher: ['/admin', '/admin/:path*'],
-};
+// Notice there is NO `export const config = {...}` down here anymore!
