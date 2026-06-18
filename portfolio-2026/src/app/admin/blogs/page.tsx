@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchTableData, insertRecord, updateRecord, deleteRecord } from "../../../actions/adminCrud";
+import ImageUploader from "../../../components/ImageUploader";
 
 const initialForm = { 
   slug: "", 
@@ -105,9 +106,15 @@ export default function AdminBlogsPage() {
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Full Markdown / Content Body</label>
             <textarea rows={8} required value={form.content} onChange={e => setForm({...form, content: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-fuchsia-500 font-mono leading-relaxed" placeholder="Write your technical content here..." />
           </div>
+          
+          {/* Replaced text input with ImageUploader */}
           <div className="md:col-span-2">
-            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Cover Image URL (Optional)</label>
-            <input value={form.image_url || ""} onChange={e => setForm({...form, image_url: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-fuchsia-500" placeholder="/blogs/ai-cover.png" />
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Cover Image</label>
+            <ImageUploader 
+              currentImageUrl={form.image_url}
+              onUploadSuccess={(url) => setForm({ ...form, image_url: url })}
+              folderName="blogs"
+            />
           </div>
         </div>
         
