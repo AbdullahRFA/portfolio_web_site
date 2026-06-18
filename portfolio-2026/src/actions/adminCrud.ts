@@ -38,12 +38,16 @@ export async function deleteRecord(table: string, id: string | number, pkCol = '
 export async function loginAdmin(password: string) {
   // In production, use environment variables: process.env.ADMIN_PASSWORD
   if (password === 'admin123') { 
-    cookies().set('admin_auth', 'true', { secure: true, httpOnly: true });
+    // Await the cookies() promise before setting
+    const cookieStore = await cookies();
+    cookieStore.set('admin_auth', 'true', { secure: true, httpOnly: true });
     return { success: true };
   }
   return { success: false, error: 'Invalid password' };
 }
 
 export async function logoutAdmin() {
-  cookies().delete('admin_auth');
+  // Await the cookies() promise before deleting
+  const cookieStore = await cookies();
+  cookieStore.delete('admin_auth');
 }
