@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchTableData, insertRecord, updateRecord, deleteRecord } from "../../../actions/adminCrud";
+import ImageUploader from "../../../components/ImageUploader";
 
 const initialForm = { 
   name: "Abdullah Nazmus-Sakib", 
@@ -65,14 +66,20 @@ export default function AdminGuestbookPage() {
             <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" />
           </div>
           <div>
-            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Avatar URL</label>
-            <input required value={form.avatar} onChange={e => setForm({...form, avatar: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" />
-          </div>
-          <div>
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Display Date</label>
             <input required value={form.date} onChange={e => setForm({...form, date: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" />
           </div>
-          <div className="flex items-center gap-3 mt-6">
+          
+          <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Avatar Image</label>
+            <ImageUploader 
+              currentImageUrl={form.avatar}
+              onUploadSuccess={(url) => setForm({ ...form, avatar: url })}
+              folderName="avatars"
+            />
+          </div>
+
+          <div className="flex items-center gap-3 mt-2 md:col-span-2">
             <input 
               type="checkbox" 
               checked={form.is_owner} 
