@@ -19,17 +19,17 @@ export async function insertRecord(table: string, payload: any) {
   return data;
 }
 
-// Generic Update
-export async function updateRecord(table: string, id: string | number, payload: any) {
-  const { data, error } = await supabase.from(table).update(payload).eq('id', id).select();
+// Generic Update (Updated to support custom Primary Keys)
+export async function updateRecord(table: string, id: string | number, payload: any, pkCol = 'id') {
+  const { data, error } = await supabase.from(table).update(payload).eq(pkCol, id).select();
   if (error) throw new Error(error.message);
   revalidatePath(`/admin/${table}`);
   return data;
 }
 
-// Generic Delete
-export async function deleteRecord(table: string, id: string | number) {
-  const { error } = await supabase.from(table).delete().eq('id', id);
+// Generic Delete (Updated to support custom Primary Keys)
+export async function deleteRecord(table: string, id: string | number, pkCol = 'id') {
+  const { error } = await supabase.from(table).delete().eq(pkCol, id);
   if (error) throw new Error(error.message);
   revalidatePath(`/admin/${table}`);
 }
