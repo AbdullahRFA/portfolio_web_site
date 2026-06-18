@@ -8,67 +8,75 @@ import ProjectShowcase from "../components/ProjectShowcase";
 import SkillsBento from "../components/SkillsBento";
 import Link from "next/link";
 
+import { supabase } from "../lib/supabase";
+
+
 export default async function Home() {
+  // Fetch all your public data in parallel directly from Supabase
+  const [
+    { data: projects },
+    { data: blogs },
+    { data: skills },
+    { data: certs }
+  ] = await Promise.all([
+    supabase.from('projects').select('*').order('created_at', { ascending: false }),
+    supabase.from('blogs').select('*').order('created_at', { ascending: false }),
+    supabase.from('skills').select('*').order('created_at', { ascending: true }),
+    supabase.from('certifications').select('*').order('created_at', { ascending: false }),
+  ]);
+
   return (
-    // FIXED: Swapped space-y-24 to space-y-6 to prevent margin-stacking inflation between your components
-    <main className="max-w-6xl mx-auto px-6 pb-20 space-y-2 ">
-      {/* 3.1 Refined Interactive Hero Section */}
-      <div id="home" className="scroll-mt-24">
-        <Hero />
-      </div>
+    <div className="min-h-screen bg-zinc-950 text-zinc-50">
+      {/* <Navbar /> */}
+      
+      <main className="max-w-6xl mx-auto px-6 pb-20 space-y-2">
+        
+        <div id="home" className="scroll-mt-24">
+          <Hero />
+        </div>
 
-      {/* 3.2 & 3.4 About Section / Experience Timeline Anchor Target */}
-      <div id="about" className="scroll-mt-20">
-        <AboutSection />
-      </div>
+        <div id="about" className="scroll-mt-20">
+          <AboutSection />
+        </div>
 
-      {/* 3.5 Project Showcase Module with Layout Filtering & Modals */}
-      <ProjectShowcase />
+        {/* Passing live Supabase data to components */}
+        <ProjectShowcase projects={projects || []} />
 
-      {/* 3.3 Skills Bento Grid Anchor Target */}
-      <div id="skills" className="scroll-mt-20">
-        <SkillsBento />
-      </div>
+        <div id="skills" className="scroll-mt-20">
+          <SkillsBento skills={skills || []} />
+        </div>
 
-      {/* 3.6 Certifications Showcase Anchor Target */}
-      <div id="certifications" className="scroll-mt-20">
-        <CertificationShowcase />
-      </div>
+        <div id="certifications" className="scroll-mt-20">
+          <CertificationShowcase certifications={certs || []} />
+        </div>
 
-      {/* 3.7 Blog Module Integration Element */}
-      <div id="blog" className="scroll-mt-20">
-        <BlogShowcase />
-      </div>
+        <div id="blog" className="scroll-mt-20">
+          <BlogShowcase blogs={blogs || []} />
+        </div>
 
-      {/* 3.8 Guestbook Module Anchor Section */}
-      <div id="guestbook" className="scroll-mt-20">
-        <Guestbook />
-      </div>
+        <div id="guestbook" className="scroll-mt-20">
+          {/* Guestbook will be handled differently because it needs a form submission */}
+          <Guestbook />
+        </div>
 
-      {/* 3.7 Contact Form Anchor Target */}
-      <div id="contact" className="scroll-mt-20">
-        <ContactForm />
-      </div>
+        <div id="contact" className="scroll-mt-20">
+          <ContactForm />
+        </div>
 
-      {/* Footer with Secret Admin Link */}
-      <footer className="w-full py-10 text-center text-sm text-zinc-600 mt-20 border-t border-zinc-900/50">
-        <p>
-          © {new Date().getFullYear()} Abdullah Nazmus-Sakib. All rights reserved
-          {/* SECRET ADMIN TRIGGER: 
-            This period acts as a hidden link. 
-            'cursor-default' prevents the mouse from changing to a pointer.
-          */}
-          <Link 
-            href="/admin/login" 
-            className="cursor-default text-zinc-600 hover:text-zinc-600 outline-none"
-            tabIndex={-1} // Removes it from keyboard tab navigation so screen readers ignore it
-          >
-            .
-          </Link>
-        </p>
-      </footer>
-
-
-    </main>
+        {/* Footer with Secret Admin Link */}
+        <footer className="w-full py-10 text-center text-sm text-zinc-600 mt-20 border-t border-zinc-900/50">
+          <p>
+            © {new Date().getFullYear()} Abdullah Nazmus-Sakib. All rights reserved
+            <Link 
+              href="/admin/login" 
+              className="cursor-default text-zinc-600 hover:text-zinc-600 outline-none"
+              tabIndex={-1}
+            >
+              .
+            </Link>
+          </p>
+        </footer>
+      </main>
+    </div>
   );
 }
