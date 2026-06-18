@@ -6,6 +6,7 @@ import Guestbook from "../components/Guestbook";
 import Hero from "../components/Hero";
 import ProjectShowcase from "../components/ProjectShowcase";
 import SkillsBento from "../components/SkillsBento";
+import Link from "next/link";
 
 export default async function Home() {
   return (
@@ -48,6 +49,26 @@ export default async function Home() {
       <div id="contact" className="scroll-mt-20">
         <ContactForm />
       </div>
+
+      {/* Footer with Secret Admin Link */}
+      <footer className="w-full py-10 text-center text-sm text-zinc-600 mt-20 border-t border-zinc-900/50">
+        <p>
+          © {new Date().getFullYear()} Abdullah Nazmus-Sakib. All rights reserved
+          {/* SECRET ADMIN TRIGGER: 
+            This period acts as a hidden link. 
+            'cursor-default' prevents the mouse from changing to a pointer.
+          */}
+          <Link 
+            href="/admin/login" 
+            className="cursor-default text-zinc-600 hover:text-zinc-600 outline-none"
+            tabIndex={-1} // Removes it from keyboard tab navigation so screen readers ignore it
+          >
+            .
+          </Link>
+        </p>
+      </footer>
+
+
     </main>
   );
 }
