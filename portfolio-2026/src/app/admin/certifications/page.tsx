@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchTableData, insertRecord, updateRecord, deleteRecord } from "../../../actions/adminCrud";
+import ImageUploader from "../../../components/ImageUploader";
 
 const initialForm = { 
   title: "", 
@@ -112,13 +113,21 @@ export default function AdminCertificationsPage() {
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Credential URL</label>
             <input value={form.credential_url} onChange={e => setForm({...form, credential_url: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="https://..." />
           </div>
-          <div className="md:col-span-2">
-            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Photos URLs (Comma Separated)</label>
-            <input required value={form.photos} onChange={e => setForm({...form, photos: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="https://image1.jpg, https://image2.jpg" />
-          </div>
+          
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Tags (Comma Separated)</label>
             <input required value={form.tags} onChange={e => setForm({...form, tags: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="Core Engineering, SQA, Architecture" />
+          </div>
+
+          {/* Replaced text input with ImageUploader */}
+          <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Certification Image(s)</label>
+            <ImageUploader 
+              currentImageUrl={form.photos}
+              onUploadSuccess={(url) => setForm({ ...form, photos: url })}
+              folderName="certifications"
+            />
+            <p className="text-[9px] text-zinc-500 mt-1">Note: If adding multiple images, separate the URLs with commas in the text box.</p>
           </div>
         </div>
         
