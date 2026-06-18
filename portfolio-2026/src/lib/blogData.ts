@@ -1,5 +1,6 @@
 // src/lib/blogData.ts
 import { IBlogPost } from '../types/blog';
+import { supabase } from './supabase';
 
 export const mockBlogPosts: IBlogPost[] = [
   {
@@ -30,3 +31,26 @@ export const mockBlogPosts: IBlogPost[] = [
     content: 'Software Quality Assurance requires more than basic happy-path validations... Designing test suites that mimic authentic user mutation sequences guarantees complete regression tracking.'
   }
 ];
+
+export const fetchBlogs = async (): Promise<IBlogPost[]> => {
+  const { data, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .order('date', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching blogs:', error);
+    return [];
+  }
+
+  return data.map((blog: any) => ({
+    slug: blog.slug,
+    title: blog.title,
+    excerpt: blog.excerpt,
+    date: blog.date,
+    category: blog.category,
+    readingTime: blog.reading_time,
+    content: blog.content,
+    image: blog.image_url, // Maps to the storage URL
+  }));
+};

@@ -120,7 +120,6 @@ const SkillsBento = () => {
 
   return (
     <section
-      id="skills"
       className="relative py-20 border-t border-zinc-900 scroll-mt-20 overflow-visible"
     >
       {/* Background Cyberpunk Ambient Glow Orbs */}

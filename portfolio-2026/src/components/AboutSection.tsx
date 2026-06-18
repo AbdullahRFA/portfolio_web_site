@@ -2,10 +2,14 @@
 
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useState } from "react";
-import { experienceData } from "../lib/aboutData";
+import { TimelineItem } from "../types/about";
 import Timeline from "./Timeline";
 
-const AboutSection = () => {
+interface AboutSectionProps {
+  experiences: TimelineItem[];
+}
+
+const AboutSection = ({ experiences = [] }: AboutSectionProps) => {
   // 1. Hero Text fly-in from Left side orchestration
   const leftFlyInVariants: Variants = {
     hidden: { opacity: 0, x: -60 },
@@ -52,8 +56,8 @@ const AboutSection = () => {
 
   const ITEMS_TO_SHOW = 2;
   const visibleExpItems = expandedExp
-    ? experienceData
-    : experienceData.slice(0, ITEMS_TO_SHOW);
+    ? experiences
+    : experiences.slice(0, ITEMS_TO_SHOW);
 
   return (
     <section
@@ -222,7 +226,7 @@ const AboutSection = () => {
                 </motion.div>
 
                 {/* Show More/Less Button with Enhanced Animation */}
-                {experienceData.length > ITEMS_TO_SHOW && (
+                {experiences.length > ITEMS_TO_SHOW && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}

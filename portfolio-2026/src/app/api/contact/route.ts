@@ -1,44 +1,41 @@
-import { NextResponse } from 'next/server';
-import connectDB from '../../../lib/db';
-import Message from '../../../models/Message';
+import { supabase } from "../../../lib/supabase";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    await connectDB();
-    
-    const { name, email, message } = await request.json();
+    const body = await request.json();
+    const { name, email, message } = body;
 
-    // 1. Basic Defensive Backend Validation
+    // Basic server-side validation
     if (!name || !email || !message) {
       return NextResponse.json(
-        { error: 'All fields (Name, Email, Message) are mandatory.' },
-        { status: 400 }
+        { error: "All fields are required." },
+        { status: 400 },
       );
     }
 
-    if (!email.includes('@')) {
+    // Insert data into the Supabase 'messages' table
+    const { error } = await supabase
+      .from("messages")
+      .insert([{ name, email, message }]);
+
+    if (error) {
+      console.error("Supabase Insert Error:", error);
       return NextResponse.json(
-        { error: 'Invalid email address provided.' },
-        { status: 400 }
+        { error: "Failed to save message." },
+        { status: 500 },
       );
     }
 
-    // 2. Persist into MongoDB database
-    const newMessage = await Message.create({
-      name,
-      email,
-      message,
-    });
-
     return NextResponse.json(
-      { success: true, data: newMessage },
-      { status: 201 }
+      { success: true, message: "Message received!" },
+      { status: 201 },
     );
-  } catch (error: any) {
-    console.error('Contact Form Backend Error:', error);
+  } catch (error) {
+    console.error("API Route Error:", error);
     return NextResponse.json(
-      { error: 'Internal Server Error. Failed to send message.' },
-      { status: 500 }
+      { error: "Internal Server Error" },
+      { status: 500 },
     );
   }
 }
