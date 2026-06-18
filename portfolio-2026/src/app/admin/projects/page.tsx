@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchTableData, insertRecord, updateRecord, deleteRecord } from "../../../actions/adminCrud";
+import ImageUploader from "../../../components/ImageUploader";
 
 const initialForm = { title: "", description: "", long_description: "", category: "Frontend", tech_stack: "", github_url: "", live_url: "", image_url: "" };
 
@@ -77,6 +78,16 @@ export default function AdminProjectsPage() {
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Tech Stack (Comma Separated)</label>
             <input required value={form.tech_stack} onChange={e => setForm({...form, tech_stack: e.target.value})} placeholder="Next.js, Tailwind, Supabase" className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" />
+          </div>
+          
+          {/* Cover Image Uploader Block */}
+          <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Cover Image</label>
+            <ImageUploader 
+              currentImageUrl={form.image_url}
+              onUploadSuccess={(url) => setForm({ ...form, image_url: url })}
+              folderName="projects"
+            />
           </div>
         </div>
         
