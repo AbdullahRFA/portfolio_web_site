@@ -30,7 +30,6 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50">
-      <Navbar />
       
       <main className="max-w-6xl mx-auto px-6 pb-20 space-y-2">
         
