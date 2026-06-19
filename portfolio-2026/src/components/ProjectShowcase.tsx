@@ -2,16 +2,14 @@
 
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useState } from "react";
-// REMOVED: import { mockProjects } from "../lib/projectsData";
 import { IProjectCaseStudy } from "../types/project";
 
 export default function ProjectShowcase({ projects }: { projects: any[] }) {
-  // Configured filters tracking your verified portfolio disciplines from your resume
+  // Configured filters tracking your verified portfolio disciplines
   const [filter, setFilter] = useState<
     "All" | "Web Architecture" | "Mobile Apps" | "AI/ML & IoT"
   >("All");
-  const [selectedProject, setSelectedProject] =
-    useState<IProjectCaseStudy | null>(null);
+  const [selectedProject, setSelectedProject] = useState<IProjectCaseStudy | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
 
   const projectsToShow = 6;
@@ -23,8 +21,11 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
     "AI/ML & IoT",
   ] as const;
 
-  // Filter mapping matching database categories or fallback tags safely
-  const filteredProjects = projects.filter((project) => {
+  // 1. Sort projects first to respect the admin sort_order settings
+  const sortedProjects = [...projects].sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+
+  // 2. Filter mapping matching database categories or fallback tags safely
+  const filteredProjects = sortedProjects.filter((project) => {
     if (filter === "All") return true;
     if (filter === "Web Architecture")
       return (
@@ -142,6 +143,17 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
               <div className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
               <div>
+                {/* Embedded Project Image for Card */}
+                {project.image_url && (
+                  <div className="relative w-full aspect-video mb-5 rounded-xl overflow-hidden border border-zinc-800/80 shadow-inner group-hover:border-cyan-500/30 transition-colors duration-300">
+                    <img 
+                      src={project.image_url} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+                    />
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-400 border border-zinc-700/50 group-hover:border-cyan-500/20 group-hover:text-cyan-400 transition-colors duration-300">
                     {project.category}
@@ -172,7 +184,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
               </div>
 
               {/* Tech Stack Horizontal Pill System */}
-              <div className="flex flex-wrap gap-1.5 pt-2 border-t border-zinc-800/60 group-hover:border-cyan-500/10 transition-colors duration-300">
+              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-zinc-800/60 group-hover:border-cyan-500/10 transition-colors duration-300">
                 {project.tech_stack?.map((tech: string) => (
                   <span
                     key={tech}
@@ -219,7 +231,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-zinc-950/80 backdrop-blur-md overflow-y-auto"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
@@ -227,14 +239,14 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 30, scale: 0.95 }}
               transition={{ type: "spring", duration: 0.45, ease: "easeOut" }}
-              className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 p-8 shadow-[0_0_50px_rgba(6,182,212,0.25)] z-50"
+              className="relative w-full max-w-3xl overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 shadow-[0_0_50px_rgba(6,182,212,0.25)] z-50 my-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-cyan-400 via-blue-500 to-fuchsia-500" />
+              <div className="absolute top-0 left-0 right-0 h-0.5 z-10 bg-linear-to-r from-cyan-400 via-blue-500 to-fuchsia-500" />
 
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 p-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-500 hover:text-cyan-400 border border-zinc-800 hover:border-cyan-500/30 transition-all duration-200 shadow-lg"
+                className="absolute top-6 right-6 z-10 p-2 rounded-xl bg-zinc-950/80 hover:bg-zinc-800 text-zinc-400 hover:text-cyan-400 border border-zinc-800 hover:border-cyan-500/30 backdrop-blur-md transition-all duration-200 shadow-lg"
                 aria-label="Close details"
               >
                 <svg
@@ -244,61 +256,83 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
                   stroke="currentColor"
                   strokeWidth={2.5}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
 
-              <div className="space-y-5">
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400 px-2.5 py-1 rounded-md bg-cyan-500/5 border border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                    {selectedProject.category} Core Architecture
-                  </span>
-                  <h3 className="text-2xl font-black text-zinc-50 tracking-tight mt-4 leading-tight">
-                    {selectedProject.title}
-                  </h3>
+              {/* Cover Image inside Modal */}
+              {selectedProject.image_url && (
+                <div className="relative w-full h-64 sm:h-80 border-b border-zinc-800">
+                  {/* Image Overlay Gradient for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-1" />
+                  <img 
+                    src={selectedProject.image_url} 
+                    alt={selectedProject.title} 
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
+              )}
 
-                <div className="flex flex-wrap gap-1.5 py-3 border-y border-zinc-800">
-                  {selectedProject.tech_stack?.map((tech: string) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-1 text-xs font-bold rounded-md bg-zinc-950 text-zinc-300 border border-zinc-800"
-                    >
-                      {tech}
+              {/* Text Content Area */}
+              <div className={`p-8 ${!selectedProject.image_url ? 'pt-10' : 'pt-4'}`}>
+                <div className="space-y-5">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400 px-2.5 py-1 rounded-md bg-cyan-500/5 border border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.1)]">
+                      {selectedProject.category} Core Architecture
                     </span>
-                  ))}
-                </div>
+                    <h3 className="text-3xl font-black text-zinc-50 tracking-tight mt-4 leading-tight">
+                      {selectedProject.title}
+                    </h3>
+                  </div>
 
-                <div className="space-y-2">
-                  <h4 className="text-xs font-black uppercase tracking-wider text-zinc-500">
-                    Architectural Breakdown & Problem Statement
-                  </h4>
-                  <p className="text-sm text-zinc-300 leading-relaxed bg-zinc-950/60 p-5 rounded-xl border border-zinc-800/80 font-normal shadow-inner">
-                    {selectedProject.long_description}
-                  </p>
-                </div>
+                  <div className="flex flex-wrap gap-1.5 py-3 border-y border-zinc-800">
+                    {selectedProject.tech_stack?.map((tech: string) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 text-xs font-bold rounded-md bg-zinc-950 text-zinc-300 border border-zinc-800"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
 
-                <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800/60">
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="text-xs font-bold text-zinc-400 hover:text-zinc-100 px-4 py-2.5 rounded-xl transition-colors"
-                  >
-                    Close
-                  </button>
-                  {selectedProject.github_url && (
-                    <a
-                      href={selectedProject.github_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2.5 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-xs font-bold shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all flex items-center gap-2 transform hover:-translate-y-0.5 duration-200"
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-zinc-500">
+                      Architectural Breakdown & Problem Statement
+                    </h4>
+                    <p className="text-sm text-zinc-300 leading-relaxed bg-zinc-950/60 p-5 rounded-xl border border-zinc-800/80 font-normal shadow-inner whitespace-pre-wrap">
+                      {selectedProject.long_description}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800/60">
+                    <button
+                      onClick={() => setSelectedProject(null)}
+                      className="text-xs font-bold text-zinc-400 hover:text-zinc-100 px-4 py-2.5 rounded-xl transition-colors"
                     >
-                      Source Code
-                    </a>
-                  )}
+                      Close
+                    </button>
+                    {selectedProject.live_url && (
+                      <a
+                        href={selectedProject.live_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold border border-zinc-700 transition-all flex items-center gap-2 transform hover:-translate-y-0.5 duration-200"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                    {selectedProject.github_url && (
+                      <a
+                        href={selectedProject.github_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-xs font-bold shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all flex items-center gap-2 transform hover:-translate-y-0.5 duration-200"
+                      >
+                        Source Code
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -308,7 +342,6 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
     </section>
   );
 }
-
 
 
 
