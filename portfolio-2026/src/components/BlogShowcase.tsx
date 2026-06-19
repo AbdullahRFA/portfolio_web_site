@@ -97,8 +97,7 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
             Technical Insights
           </h2>
           <p className="text-zinc-400 max-w-xl text-sm mt-2 leading-relaxed">
-            Deep-dives into Explainable AI (XAI), complex software architecture
-            patterns, and structured automation frameworks.
+            Documenting my engineering journey through structured technical articles on building modern applications, evaluating algorithmic efficiencies, and translating core computer science concepts into clean code solutions.
           </p>
         </div>
 
