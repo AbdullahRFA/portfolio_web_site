@@ -63,9 +63,9 @@ const ContactForm = () => {
         {/* Left Informational Col */}
         <div className="md:col-span-2 space-y-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+            {/* <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
               06 . Secure Channel
-            </span>
+            </span> */}
             <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">
               Let&apos;s Connect
             </h2>
@@ -81,7 +81,7 @@ const ContactForm = () => {
                 📍
               </span>
               <span className="group-hover:text-zinc-200 transition-colors">
-                Dhaka, Bangladesh
+                JU, Savar, Dhaka, Bangladesh
               </span>
             </div>
             <div className="flex items-center gap-3 group">
@@ -89,7 +89,7 @@ const ContactForm = () => {
                 📧
               </span>
               <span className="group-hover:text-zinc-200 transition-colors">
-                abdulllahnazmus-sakib@example.com
+                shakibrybmn@gmail.com
               </span>
             </div>
           </div>

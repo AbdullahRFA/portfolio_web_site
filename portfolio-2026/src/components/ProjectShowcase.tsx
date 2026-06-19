@@ -84,9 +84,9 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
 
       <div className="flex flex-col xl:flex-row xl:items-end justify-between mb-12 gap-6">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+          {/* <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
             01 . Handcrafted Systems
-          </span>
+          </span> */}
           <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-100">
             Featured Projects
           </h2>

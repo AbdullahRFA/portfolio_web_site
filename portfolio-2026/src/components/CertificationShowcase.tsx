@@ -33,9 +33,9 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
 
       <div className="mx-auto max-w-6xl px-0 sm:px-2">
         <div className="mb-8 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+          {/* <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">
             07 . Certifications
-          </span>
+          </span> */}
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-4xl font-black tracking-tight text-zinc-50">

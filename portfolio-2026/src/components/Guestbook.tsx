@@ -60,7 +60,7 @@ const Guestbook = () => {
 
       <div className="max-w-4xl mx-auto px-6">
         <div className="mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">05 . Public Logbook</span>
+          {/* <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">05 . Public Logbook</span> */}
           <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">Developer Guestbook</h2>
           <p className="text-zinc-400 text-sm mt-2 leading-relaxed">Leave a token of your visit. Your feedback syncs directly to the database.</p>
         </div>

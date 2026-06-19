@@ -58,7 +58,7 @@ export default function AboutSection({ experiences = [], education = [] }: About
           className="lg:col-span-5 lg:sticky lg:top-24 space-y-6"
         >
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">02 . Story Context</span>
+            {/* <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">02 . Story Context</span> */}
             <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">About Me</h2>
           </div>
 

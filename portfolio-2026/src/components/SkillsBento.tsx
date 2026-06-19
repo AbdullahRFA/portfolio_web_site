@@ -138,9 +138,9 @@ const SkillsBento = () => {
       <div className="absolute bottom-0 right-10 -z-10 h-72 w-72 rounded-full bg-cyan-500/[0.03] blur-3xl pointer-events-none animate-pulse" />
 
       <div className="mb-12">
-        <span className="text-xs font-bold uppercase tracking-widest text-fuchsia-400 drop-shadow-[0_0_10px_rgba(232,121,249,0.3)]">
+        {/* <span className="text-xs font-bold uppercase tracking-widest text-fuchsia-400 drop-shadow-[0_0_10px_rgba(232,121,249,0.3)]">
           03 . Technical Capability
-        </span>
+        </span> */}
         <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">
           Technical Toolkit
         </h2>

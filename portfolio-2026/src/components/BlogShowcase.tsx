@@ -90,9 +90,9 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
 
       <div className="flex flex-col xl:flex-row xl:items-end justify-between mb-12 gap-6">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-fuchsia-400 drop-shadow-[0_0_10px_rgba(232,121,249,0.3)]">
+          {/* <span className="text-xs font-bold uppercase tracking-widest text-fuchsia-400 drop-shadow-[0_0_10px_rgba(232,121,249,0.3)]">
             04 . Written Documentation
-          </span>
+          </span> */}
           <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">
             Technical Insights
           </h2>
