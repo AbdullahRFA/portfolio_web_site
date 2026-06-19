@@ -207,7 +207,8 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
             </motion.div>
           ))}
         </AnimatePresence>
-      </div>
+      {/* FIXED: Changed </div> to </motion.div> to accurately close the tracking wrapper */}
+      </motion.div>
 
       {filteredProjects.length > projectsToShow && (
         <div className="mt-8 flex justify-center">
