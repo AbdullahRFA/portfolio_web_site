@@ -8,7 +8,7 @@ const initialForm = {
   degree: "", 
   date: "", 
   description: "", 
-  linkedin_url: "", 
+  cgpa: "", 
   skills: "" 
 };
 
@@ -39,7 +39,14 @@ export default function AdminEducationPage() {
   };
 
   const handleEdit = (edu: any) => {
-    setForm(edu);
+    setForm({
+      institution: edu.institution || "",
+      degree: edu.degree || "",
+      date: edu.date || "",
+      description: edu.description || "",
+      cgpa: edu.cgpa || "",
+      skills: edu.skills || ""
+    });
     setEditingId(edu.id);
   };
 
@@ -72,8 +79,8 @@ export default function AdminEducationPage() {
             <input required value={form.date} onChange={e => setForm({...form, date: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-emerald-500" />
           </div>
           <div>
-            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">LinkedIn URL</label>
-            <input value={form.linkedin_url} onChange={e => setForm({...form, linkedin_url: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-emerald-500" />
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">CGPA</label>
+            <input value={form.cgpa} placeholder="e.g. 3.62 out of 4.00" onChange={e => setForm({...form, cgpa: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-emerald-500" />
           </div>
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Description</label>
@@ -98,6 +105,7 @@ export default function AdminEducationPage() {
             <tr>
               <th className="px-6 py-4">Institution</th>
               <th className="px-6 py-4">Degree</th>
+              <th className="px-6 py-4">CGPA</th>
               <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -106,6 +114,7 @@ export default function AdminEducationPage() {
               <tr key={edu.id} className="hover:bg-zinc-900/40">
                 <td className="px-6 py-4 font-bold text-zinc-200">{edu.institution}</td>
                 <td className="px-6 py-4">{edu.degree}</td>
+                <td className="px-6 py-4 text-emerald-400 font-medium">{edu.cgpa || "-"}</td>
                 <td className="px-6 py-4 text-right space-x-3">
                   <button onClick={() => handleEdit(edu)} className="text-zinc-500 hover:text-emerald-400 font-bold">Edit</button>
                   <button onClick={() => handleDelete(edu.id)} className="text-zinc-500 hover:text-red-400 font-bold">Delete</button>

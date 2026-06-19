@@ -11,7 +11,6 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({ experiences = [], education = [] }: AboutSectionProps) {
-  // --- Motion Variants Orchestration ---
   const leftFlyInVariants: Variants = {
     hidden: { opacity: 0, x: -60 },
     visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 70, damping: 16, delay: 0.1 } }
@@ -32,7 +31,6 @@ export default function AboutSection({ experiences = [], education = [] }: About
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
   };
 
-  // --- State Management ---
   const [activeTab, setActiveTab] = useState<"experience" | "education">("experience");
   const [expandedExp, setExpandedExp] = useState(false);
   const [expandedEdu, setExpandedEdu] = useState(false);
@@ -42,12 +40,10 @@ export default function AboutSection({ experiences = [], education = [] }: About
 
   return (
     <section id="about" className="relative py-24 border-t border-zinc-900 overflow-hidden">
-      {/* Ambient background neon glow orbs */}
       <div className="absolute top-1/3 left-0 -z-10 h-96 w-96 rounded-full bg-cyan-500/3 blur-3xl pointer-events-none animate-pulse" />
       <div className="absolute bottom-10 right-10 -z-10 h-80 w-80 rounded-full bg-fuchsia-500/2 blur-3xl pointer-events-none" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-        {/* --- LEFT COLUMN: BIO WITH FLY-IN EFFECT --- */}
         <motion.div 
           variants={leftFlyInVariants} 
           initial="hidden" 
@@ -60,13 +56,11 @@ export default function AboutSection({ experiences = [], education = [] }: About
             <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">About Me</h2>
           </div>
 
-          {/* Bio Description Box with Video-Matched Cyberpunk Hover Effects */}
           <motion.div
             variants={parentStaggerVariants}
             whileHover={{ y: -2, scale: 1.002, transition: { duration: 0.25, ease: "easeOut" } }}
             className="group relative p-6 rounded-2xl border border-zinc-800 bg-linear-to-b from-zinc-900 to-zinc-950 shadow-2xl hover:shadow-[0_0_30px_rgba(6,182,212,0.1)] hover:border-cyan-500/20 transition-all duration-300 overflow-hidden"
           >
-            {/* Subtle internal spotlight */}
             <div className="absolute -bottom-12 -right-12 h-24 w-24 rounded-full bg-cyan-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
             <motion.p variants={textItemVariants} className="text-zinc-400 text-sm leading-relaxed mb-4 font-normal">
@@ -82,7 +76,6 @@ export default function AboutSection({ experiences = [], education = [] }: About
             </motion.p>
           </motion.div>
 
-          {/* Live Quick University Stat Indicator */}
           <motion.div
             variants={textItemVariants}
             whileHover={{ y: -1, scale: 1.005, transition: { duration: 0.2, ease: "easeOut" } }}
@@ -93,7 +86,6 @@ export default function AboutSection({ experiences = [], education = [] }: About
           </motion.div>
         </motion.div>
 
-        {/* --- RIGHT COLUMN: INTERACTIVE HISTORY WITH FLY-IN EFFECT --- */}
         <motion.div 
           variants={rightFlyInVariants} 
           initial="hidden" 
@@ -128,12 +120,10 @@ export default function AboutSection({ experiences = [], education = [] }: About
           <AnimatePresence mode="wait">
             {activeTab === "experience" ? (
               <motion.div key="experience" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} className="space-y-4">
-                {/* Timeline Container */}
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ staggerChildren: 0.1, delayChildren: 0.1 }} className="bg-zinc-900/40 p-2 md:p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md">
                   <Timeline items={visibleExpItems} />
                 </motion.div>
 
-                {/* Show More/Less Button - Experience */}
                 {experiences.length > ITEMS_TO_SHOW && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }} className="flex justify-center pt-4">
                     <motion.button
@@ -156,7 +146,6 @@ export default function AboutSection({ experiences = [], education = [] }: About
               </motion.div>
             ) : (
               <motion.div key="education" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} className="space-y-4">
-                {/* Education Cards Container */}
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ staggerChildren: 0.12, delayChildren: 0.1 }} className="bg-zinc-900/40 p-2 md:p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md space-y-4">
                   <AnimatePresence mode="sync">
                     {education.slice(0, expandedEdu ? education.length : 1).map((item: any, idx: number) => (
@@ -169,10 +158,7 @@ export default function AboutSection({ experiences = [], education = [] }: About
                         whileHover={{ y: -4, transition: { duration: 0.2 } }}
                         className="group rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-950/70 to-zinc-950/50 p-6 backdrop-blur-sm shadow-lg hover:shadow-[0_0_30px_rgba(6,182,212,0.1)] hover:border-cyan-500/30 transition-all duration-300 overflow-hidden relative"
                       >
-                        {/* Animated gradient accent on hover */}
                         <motion.div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl" />
-                        
-                        {/* Top accent line */}
                         <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ delay: idx * 0.15, duration: 0.5 }} className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-fuchsia-500 origin-left" />
 
                         <div className="relative z-10 flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start">
@@ -185,10 +171,12 @@ export default function AboutSection({ experiences = [], education = [] }: About
                             </p>
                           </div>
                           
-                          {item.linkedIn && (
-                            <motion.a href={item.linkedIn} target="_blank" rel="noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="text-xs uppercase tracking-[0.26em] font-bold text-zinc-500 hover:text-cyan-400 transition-all duration-300 rounded-lg px-3 py-1.5 hover:bg-cyan-500/10 border border-transparent hover:border-cyan-500/30">
-                              View on LinkedIn
-                            </motion.a>
+                          {/* Replaced LinkedIn Button with CGPA Badge */}
+                          {item.cgpa && (
+                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-widest shadow-inner shrink-0">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                              CGPA: {item.cgpa}
+                            </div>
                           )}
                         </div>
 
@@ -207,7 +195,6 @@ export default function AboutSection({ experiences = [], education = [] }: About
                   </AnimatePresence>
                 </motion.div>
 
-                {/* Show More/Less Button - Education */}
                 {education.length > 1 && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }} className="flex justify-center pt-4">
                     <motion.button
