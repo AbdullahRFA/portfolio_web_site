@@ -4,8 +4,14 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 
 export const metadata: Metadata = {
-  title: "ANS - Official Portfolio",
-  description: "Advanced full-stack portfolio built using Next.js, TypeScript, Tailwind, and MongoDB.",
+  title: "Abdullah Nazmus Sakib | Portfolio",
+  description: "Software Engineering & Full-Stack Architecture Showcase",
+  // // FIXED: Explicitly declaring your custom image asset routing parameters
+  // icons: {
+  //   icon: "/icon.png", // Paths pointing to images saved directly in your /public directory
+  //   shortcut: "/favicon.ico",
+  //   apple: "/apple-touch-icon.png", // Optional: Custom high-res image for iOS bookmarks
+  // },
 };
 
 export default function RootLayout({
