@@ -113,6 +113,9 @@ export default function AdminBlogsPage() {
               <option>AI & ML</option>
               <option>SQA Engineering</option>
               <option>Hardware & IoT</option>
+              <option>Operating Systems</option>
+              <option>System Design</option>
+              <option>DevOps</option>
             </select>
           </div>
           <div className="md:col-span-2">
