@@ -64,10 +64,23 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
               whileHover={{ y: -8, scale: 1.01 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={() => setSelectedCertification(cert)}
-              className="group cursor-pointer relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/80 p-6 shadow-2xl transition-all duration-300 hover:border-cyan-500/30"
+              className="group cursor-pointer relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/80 p-6 shadow-2xl transition-all duration-300 hover:border-cyan-500/30 flex flex-col"
             >
-              <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-cyan-400 via-blue-500 to-fuchsia-500" />
-              <div className="relative space-y-4">
+              <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-cyan-400 via-blue-500 to-fuchsia-500 z-10" />
+              
+              {/* Card Image Preview - Added Here */}
+              {cert.photos && cert.photos.length > 0 && (
+                <div className="relative w-full h-48 mb-5 overflow-hidden rounded-2xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-center p-2">
+                  <Image 
+                    src={cert.photos[0]} 
+                    alt={cert.title} 
+                    fill 
+                    className="object-contain drop-shadow-xl transition-transform duration-500 group-hover:scale-105" 
+                  />
+                </div>
+              )}
+
+              <div className="relative space-y-4 flex-1 flex flex-col">
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-[10px] font-black uppercase tracking-[0.28em] text-zinc-500">
                     {cert.platform}
@@ -80,11 +93,12 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
                 <h3 className="text-xl font-bold tracking-tight text-zinc-100">
                   {cert.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-zinc-400">
+                {/* line-clamp-3 added below to truncate the text to 3 lines on the card */}
+                <p className="text-sm leading-relaxed text-zinc-400 flex-1 line-clamp-3">
                   {cert.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 pt-2">
                   {cert.tags?.map((tag: string) => (
                     <span
                       key={tag}
@@ -95,7 +109,7 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-400">
+                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-400 mt-auto pt-2 border-t border-zinc-800/60">
                   <span className="rounded-full bg-zinc-900 px-2 py-1">{cert.issuer}</span>
                   <span className="rounded-full bg-zinc-900 px-2 py-1">ID: {cert.credential_id ?? "None"}</span>
                 </div>
@@ -124,13 +138,13 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto"
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-4xl overflow-hidden rounded-4xl border border-zinc-800 bg-zinc-950/95 shadow-[0_0_50px_rgba(0,0,0,0.6)]"
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative w-full max-w-5xl overflow-hidden rounded-4xl border border-zinc-800 bg-zinc-950/95 shadow-[0_0_50px_rgba(0,0,0,0.6)] my-auto"
             >
               <button
                 onClick={() => setSelectedCertification(null)}
@@ -139,8 +153,8 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
                 Close
               </button>
 
-              <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-                <div className="space-y-6 p-8">
+              <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+                <div className="space-y-6 p-8 flex flex-col justify-center">
                   <div className="space-y-3">
                     <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
                       {selectedCertification.platform} Certification
@@ -174,19 +188,29 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
                     href={selectedCertification.credential_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-xs font-black uppercase tracking-[0.24em] text-zinc-950 transition-all duration-200 hover:bg-cyan-400"
+                    className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-5 py-3 text-xs font-black uppercase tracking-[0.24em] text-zinc-950 transition-all duration-200 hover:bg-cyan-400 w-fit"
                   >
                     Open credential URL
                   </a>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 p-4 sm:p-8">
+                {/* Modal Images Container - Modified to uncropped object-contain */}
+                <div className="flex flex-col gap-4 p-4 lg:p-8 justify-center bg-zinc-900/30 border-l border-zinc-800/50">
                   {selectedCertification.photos?.map((photo: string) => (
-                    <div key={photo} className="relative h-48 w-full overflow-hidden rounded-3xl shadow-xl shadow-black/20">
-                      <Image src={photo} alt={selectedCertification.title} fill className="object-cover" />
+                    <div 
+                      key={photo} 
+                      className="relative w-full min-h-[300px] lg:h-full lg:min-h-[500px] overflow-hidden rounded-3xl shadow-xl shadow-black/20 bg-zinc-900/50 flex items-center justify-center p-4 border border-zinc-800"
+                    >
+                      <Image 
+                        src={photo} 
+                        alt={selectedCertification.title} 
+                        fill 
+                        className="object-contain p-2 md:p-6 drop-shadow-2xl" 
+                      />
                     </div>
                   ))}
                 </div>
+
               </div>
             </motion.div>
           </motion.div>
