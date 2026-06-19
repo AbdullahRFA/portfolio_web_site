@@ -1,5 +1,9 @@
+// src/app/api/projects/route.ts
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
+
+// FORCE VERCEL SERVERLESS RUNTIME TO EXECUTE A LIVE DATABASE LOOKUP ON EVERY API CALL
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
