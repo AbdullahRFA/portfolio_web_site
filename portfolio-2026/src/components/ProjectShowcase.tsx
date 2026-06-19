@@ -91,8 +91,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
             Featured Projects
           </h2>
           <p className="text-zinc-400 max-w-xl text-sm mt-2 leading-relaxed">
-            An interactive catalog of architectural prototypes, distributed
-            backend stacks, and intelligent automation systems.
+            A curated collection of production-ready applications, cross-platform mobile systems, and full-stack prototypes. Each project demonstrates a commitment to clean code patterns, optimized performance, and rigorous software quality assurance."
           </p>
         </div>
 
