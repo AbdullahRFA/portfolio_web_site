@@ -11,10 +11,10 @@ const Guestbook = () => {
   const [showAllEntries, setShowAllEntries] = useState(false);
 
   const entriesPreviewLimit = 4;
+  const characterLimit = 150;
 
-  // 1. Fetch Entries
   const loadEntries = async () => {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("guestbook")
       .select("*")
       .order("created_at", { ascending: false });
@@ -23,25 +23,21 @@ const Guestbook = () => {
 
   useEffect(() => { loadEntries(); }, []);
 
-  // 2. Submit Entry
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.message.trim()) return;
 
     setIsSubmitting(true);
-    const { error } = await supabase.from("guestbook").insert([
-      { 
-        name: formData.name, 
-        message: formData.message, 
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.name}`,
-        date: new Date().toLocaleDateString()
-      }
-    ]);
+    await supabase.from("guestbook").insert([{ 
+      name: formData.name, 
+      message: formData.message, 
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.name}`,
+      date: new Date().toLocaleDateString(),
+      is_owner: false 
+    }]);
 
-    if (!error) {
-      setFormData({ name: "", message: "" });
-      loadEntries();
-    }
+    setFormData({ name: "", message: "" });
+    loadEntries();
     setIsSubmitting(false);
   };
 
@@ -52,39 +48,57 @@ const Guestbook = () => {
     visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
   };
 
+  const entryVariants: Variants = {
+    hidden: { opacity: 0, y: 20, scale: 0.98 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 120, damping: 17 } },
+  };
+
   return (
     <section id="guestbook" className="relative py-20 border-t border-zinc-900 scroll-mt-20 overflow-visible">
+      <div className="absolute bottom-1/4 right-10 -z-10 h-72 w-72 rounded-full bg-cyan-500/[0.02] blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 -z-10 h-80 w-80 rounded-full bg-fuchsia-500/[0.02] blur-3xl pointer-events-none animate-pulse" />
+
       <div className="max-w-4xl mx-auto px-6">
         <div className="mb-10">
-          <h2 className="text-4xl font-black text-zinc-50">Developer Guestbook</h2>
-          <p className="text-zinc-400 text-sm mt-2">Sign the logbook. Your feedback will be stored directly in Supabase.</p>
+          <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">05 . Public Logbook</span>
+          <h2 className="text-4xl font-black tracking-tight mt-1 text-zinc-50">Developer Guestbook</h2>
+          <p className="text-zinc-400 text-sm mt-2 leading-relaxed">Leave a token of your visit. Your feedback syncs directly to the database.</p>
         </div>
 
-        {/* --- FORM --- */}
-        <div className="relative mb-10 p-6 rounded-2xl border border-zinc-800 bg-zinc-900/50">
+        {/* --- FORM SECTION --- */}
+        <div className="relative mb-10 p-6 rounded-2xl border border-zinc-800 bg-linear-to-b from-zinc-900 to-zinc-950 shadow-2xl overflow-hidden group">
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-fuchsia-500 via-blue-500 to-cyan-500" />
           <form onSubmit={handleSubmit} className="space-y-4">
             <input 
               required
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
               placeholder="Your Name"
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 focus:border-cyan-500 outline-none transition-all"
             />
             <textarea
               required
               value={formData.message}
               onChange={(e) => setFormData({...formData, message: e.target.value})}
               placeholder="Leave a message..."
+              maxLength={characterLimit}
               rows={3}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 focus:border-cyan-500 outline-none transition-all resize-none"
             />
-            <button 
-              disabled={isSubmitting}
-              type="submit" 
-              className="px-5 py-2 text-xs font-bold bg-cyan-500 text-zinc-950 rounded-xl"
-            >
-              {isSubmitting ? "Signing..." : "Sign Log Wall"}
-            </button>
+            
+            <div className="flex items-center justify-between pt-2">
+               <div className="flex items-center gap-2 text-[10px] text-zinc-500 font-bold">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" className="stroke-zinc-800 fill-none" strokeWidth="2"/><circle cx="12" cy="12" r="10" className="stroke-cyan-400 fill-none" strokeWidth="2" strokeDasharray={63} strokeDashoffset={63 * (1 - formData.message.length / characterLimit)} /></svg>
+                  {characterLimit - formData.message.length} chars left
+               </div>
+               <button 
+                disabled={isSubmitting}
+                type="submit" 
+                className="px-6 py-2.5 text-xs font-black uppercase tracking-widest text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 rounded-xl transition-all shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+              >
+                {isSubmitting ? "Transmitting..." : "Sign Log Wall"}
+              </button>
+            </div>
           </form>
         </div>
 
@@ -92,15 +106,35 @@ const Guestbook = () => {
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" className="space-y-4">
           <AnimatePresence mode="popLayout">
             {visibleEntries.map((entry) => (
-              <motion.div key={entry.id} className="flex gap-4 p-5 rounded-2xl border border-zinc-800 bg-zinc-900/20">
-                <img src={entry.avatar} className="w-10 h-10 rounded-full" alt="avatar" />
-                <div>
-                  <div className="font-bold text-zinc-200">{entry.name}</div>
-                  <p className="text-sm text-zinc-400">{entry.message}</p>
+              <motion.div
+                key={entry.id}
+                variants={entryVariants}
+                layout
+                whileHover={{ y: -3, scale: 1.005 }}
+                className={`flex gap-4 p-5 rounded-2xl border transition-all duration-300 ${entry.is_owner ? 'border-fuchsia-500/30 bg-zinc-900/40' : 'border-zinc-800 bg-zinc-900/20 hover:border-zinc-700'}`}
+              >
+                <img src={entry.avatar} className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 shrink-0" alt="avatar" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className={`text-sm font-bold ${entry.is_owner ? 'text-fuchsia-400' : 'text-zinc-200'}`}>{entry.name}</span>
+                    <span className="text-[10px] text-zinc-500 font-bold tabular-nums">{entry.date}</span>
+                  </div>
+                  <p className="text-sm text-zinc-400 leading-relaxed">{entry.message}</p>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
+
+          {entries.length > entriesPreviewLimit && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setShowAllEntries(!showAllEntries)}
+                className="px-6 py-2 rounded-full border border-cyan-500/30 text-xs font-bold text-cyan-300 hover:bg-cyan-500/10 transition-all uppercase tracking-widest"
+              >
+                {showAllEntries ? "See Less" : "See More Entries"}
+              </button>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
@@ -108,7 +142,6 @@ const Guestbook = () => {
 };
 
 export default Guestbook;
-
 
 
 
