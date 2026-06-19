@@ -12,7 +12,8 @@ const initialForm = {
   category: "Web Development", 
   reading_time: "5 min read", 
   content: "",
-  image_url: ""
+  image_url: "",
+  sort_order: 0 // Added sort order
 };
 
 export default function AdminBlogsPage() {
@@ -21,9 +22,10 @@ export default function AdminBlogsPage() {
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
 
   const loadData = async () => {
-    // Sort by date using the generic fetcher
+    // We still fetch initially, but now we sort by custom sort_order locally
     const data = await fetchTableData("blogs", "created_at");
-    setBlogs(data);
+    const sortedData = data.sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+    setBlogs(sortedData);
   };
 
   useEffect(() => { loadData(); }, []);
@@ -31,12 +33,15 @@ export default function AdminBlogsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Ensure sort_order is passed as a number
+    const payload = { ...form, sort_order: Number(form.sort_order) };
+
     try {
       if (editingSlug) {
         // Pass "slug" as the primary key column to our updated generic action
-        await updateRecord("blogs", editingSlug, form, "slug");
+        await updateRecord("blogs", editingSlug, payload, "slug");
       } else {
-        await insertRecord("blogs", form);
+        await insertRecord("blogs", payload);
       }
       setForm(initialForm);
       setEditingSlug(null);
@@ -45,7 +50,10 @@ export default function AdminBlogsPage() {
   };
 
   const handleEdit = (blog: any) => {
-    setForm(blog);
+    setForm({
+      ...blog,
+      sort_order: blog.sort_order || 0
+    });
     setEditingSlug(blog.slug);
   };
 
@@ -53,6 +61,27 @@ export default function AdminBlogsPage() {
     if(confirm("Are you sure you want to permanently delete this technical insight?")) {
       await deleteRecord("blogs", slug, "slug"); // Pass "slug" as the primary key
       loadData();
+    }
+  };
+
+  // --- Quick Reorder Functionality ---
+  const handleMove = async (index: number, direction: "up" | "down") => {
+    if (direction === "up" && index === 0) return;
+    if (direction === "down" && index === blogs.length - 1) return;
+
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    const currentItem = blogs[index];
+    const targetItem = blogs[targetIndex];
+
+    try {
+      // Swap their sort_order values in the database. Primary key is "slug"
+      await updateRecord("blogs", currentItem.slug, { sort_order: targetItem.sort_order || targetIndex }, "slug");
+      await updateRecord("blogs", targetItem.slug, { sort_order: currentItem.sort_order || index }, "slug");
+      
+      // Reload the data to reflect changes
+      loadData();
+    } catch (err: any) {
+      alert("Failed to reorder: " + err.message);
     }
   };
 
@@ -107,7 +136,12 @@ export default function AdminBlogsPage() {
             <textarea rows={8} required value={form.content} onChange={e => setForm({...form, content: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-fuchsia-500 font-mono leading-relaxed" placeholder="Write your technical content here..." />
           </div>
           
-          {/* Replaced text input with ImageUploader */}
+          <div>
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Display Order (Lower is First)</label>
+            <input type="number" required value={form.sort_order} onChange={e => setForm({...form, sort_order: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-fuchsia-500" />
+          </div>
+
+          {/* Image Uploader */}
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Cover Image</label>
             <ImageUploader 
@@ -135,6 +169,7 @@ export default function AdminBlogsPage() {
         <table className="w-full text-left text-sm text-zinc-400">
           <thead className="bg-zinc-900 text-zinc-100 font-bold uppercase tracking-wider text-[10px]">
             <tr>
+              <th className="px-6 py-4 w-16 text-center">Order</th>
               <th className="px-6 py-4">Title & Slug</th>
               <th className="px-6 py-4">Category</th>
               <th className="px-6 py-4">Date</th>
@@ -142,11 +177,25 @@ export default function AdminBlogsPage() {
             </tr>
           </thead>
           <tbody className="bg-zinc-950 divide-y divide-zinc-800/60">
-            {blogs.map((blog) => (
+            {blogs.map((blog, index) => (
               <tr key={blog.slug} className="hover:bg-zinc-900/40 transition-colors">
+                <td className="px-6 py-4 font-mono text-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <button onClick={() => handleMove(index, "up")} disabled={index === 0} className={`text-zinc-500 hover:text-fuchsia-400 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors`}>▲</button>
+                    <span className="text-zinc-300">{blog.sort_order || 0}</span>
+                    <button onClick={() => handleMove(index, "down")} disabled={index === blogs.length - 1} className={`text-zinc-500 hover:text-fuchsia-400 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors`}>▼</button>
+                  </div>
+                </td>
                 <td className="px-6 py-4">
-                  <p className="font-bold text-zinc-200">{blog.title}</p>
-                  <p className="text-[10px] text-zinc-600 font-mono mt-1">/{blog.slug}</p>
+                  <div className="flex items-center gap-3">
+                    {blog.image_url && (
+                       <img src={blog.image_url} alt="cover" className="w-10 h-10 rounded-md object-cover border border-zinc-700 shrink-0" />
+                    )}
+                    <div>
+                      <p className="font-bold text-zinc-200">{blog.title}</p>
+                      <p className="text-[10px] text-zinc-600 font-mono mt-1">/{blog.slug}</p>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-6 py-4">
                   <span className="px-2 py-1 bg-fuchsia-500/10 text-fuchsia-400 rounded-md text-[10px] uppercase font-black tracking-widest">{blog.category}</span>
