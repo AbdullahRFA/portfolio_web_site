@@ -82,14 +82,14 @@ export default function AboutSection({ experiences = [], education = [] }: About
             </motion.p>
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             variants={textItemVariants}
             whileHover={{ y: -1, scale: 1.005, transition: { duration: 0.2, ease: "easeOut" } }}
             className="flex items-center gap-4 p-4 rounded-xl border border-dashed border-zinc-800 bg-zinc-950/40 text-xs font-bold text-zinc-400 shadow-inner group"
           >
             <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe] animate-pulse" />
             <span className="group-hover:text-cyan-400 transition-colors duration-300">JU CSE Campus Core Member • Class of 2026</span>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
         <motion.div 
