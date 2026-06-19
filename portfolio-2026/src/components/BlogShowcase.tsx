@@ -16,17 +16,21 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
     setIsMounted(true);
   }, []);
 
-  // Dynamically compile a unique array list of active categories directly from your Supabase data
+  // --- Sorting Logic Added Here ---
+  // Sort the array based on the 'sort_order' field before filtering or slicing
+  const sortedBlogs = [...blogs].sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+
+  // Dynamically compile a unique array list of active categories directly from your sorted Supabase data
   const filterCategories = [
     "All",
-    ...Array.from(new Set(blogs.map((post) => post.category))),
+    ...Array.from(new Set(sortedBlogs.map((post) => post.category))),
   ];
 
   // Filter logic matching database categories
   const filteredPosts =
     activeCategory === "All"
-      ? blogs
-      : blogs.filter((post) => post.category === activeCategory);
+      ? sortedBlogs
+      : sortedBlogs.filter((post) => post.category === activeCategory);
 
   const visiblePosts = showAllPosts
     ? filteredPosts
@@ -130,7 +134,7 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
       >
         <AnimatePresence mode="popLayout">
           {filteredPosts.length > 0 ? (
-            visiblePosts.map((post) => (
+            visiblePosts.map((post: any) => (
               <motion.article
                 key={post.slug}
                 variants={articleVariants}
@@ -146,44 +150,53 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
                 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => setSelectedPost(post)}
-                className="group relative flex flex-col items-start p-6 rounded-2xl border border-zinc-800 bg-linear-to-b from-zinc-900 to-zinc-950 shadow-xl hover:shadow-[0_0_25px_rgba(232,121,249,0.05)] hover:border-fuchsia-500/20 transition-all duration-300 cursor-pointer overflow-hidden"
+                className="group relative flex flex-col md:flex-row gap-6 items-start md:items-center p-6 rounded-2xl border border-zinc-800 bg-linear-to-b from-zinc-900 to-zinc-950 shadow-xl hover:shadow-[0_0_25px_rgba(232,121,249,0.05)] hover:border-fuchsia-500/20 transition-all duration-300 cursor-pointer overflow-hidden"
               >
                 <div className="absolute -top-12 -left-12 h-24 w-24 rounded-full bg-fuchsia-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-zinc-500 mb-3">
-                  <time className="tabular-nums">{post.date}</time>
-                  <span>•</span>
-                  <span>{post.reading_time}</span>
-                  <span>•</span>
-                  <span className="px-2.5 py-0.5 rounded-md bg-zinc-950 text-zinc-400 text-[10px] uppercase tracking-widest font-black border border-zinc-800 group-hover:border-fuchsia-500/20 group-hover:text-fuchsia-400 transition-colors duration-300 shadow-inner">
-                    {post.category}
+                {/* Card Image Preview */}
+                {post.image_url && (
+                  <div className="relative w-full md:w-48 h-48 md:h-32 shrink-0 rounded-xl overflow-hidden border border-zinc-800/80">
+                    <img 
+                      src={post.image_url} 
+                      alt={post.title} 
+                      className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" 
+                    />
+                  </div>
+                )}
+
+                <div className="flex flex-col flex-1">
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-zinc-500 mb-3">
+                    <time className="tabular-nums">{post.date}</time>
+                    <span>•</span>
+                    <span>{post.reading_time}</span>
+                    <span>•</span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-zinc-950 text-zinc-400 text-[10px] uppercase tracking-widest font-black border border-zinc-800 group-hover:border-fuchsia-500/20 group-hover:text-fuchsia-400 transition-colors duration-300 shadow-inner">
+                      {post.category}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-zinc-100 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-fuchsia-400 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300 mb-2 tracking-tight">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-sm text-zinc-400 leading-relaxed mb-4 line-clamp-2 font-normal">
+                    {post.excerpt}
+                  </p>
+
+                  <span className="text-xs font-bold text-cyan-400 group-hover:text-fuchsia-400 inline-flex items-center gap-1.5 transition-colors duration-300 group-hover:underline">
+                    Read full breakdown
+                    <svg
+                      className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
                   </span>
                 </div>
-
-                <h3 className="text-xl font-bold text-zinc-100 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-fuchsia-400 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300 mb-2 tracking-tight">
-                  {post.title}
-                </h3>
-
-                <p className="text-sm text-zinc-400 leading-relaxed mb-4 line-clamp-2 font-normal">
-                  {post.excerpt}
-                </p>
-
-                <span className="text-xs font-bold text-cyan-400 group-hover:text-fuchsia-400 inline-flex items-center gap-1.5 transition-colors duration-300 group-hover:underline">
-                  Read full breakdown
-                  <svg
-                    className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </span>
               </motion.article>
             ))
           ) : (
@@ -216,7 +229,7 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/90 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-zinc-950/90 backdrop-blur-md overflow-y-auto"
             onClick={() => setSelectedPost(null)}
           >
             <motion.div
@@ -225,31 +238,48 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
               animate="visible"
               exit="exit"
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl rounded-4xl border border-zinc-800 bg-zinc-900 p-8 shadow-[0_0_60px_rgba(0,0,0,0.45)] overflow-hidden"
+              className="relative w-full max-w-4xl rounded-4xl border border-zinc-800 bg-zinc-900 shadow-[0_0_60px_rgba(0,0,0,0.45)] overflow-hidden my-auto"
             >
               <button
                 onClick={() => setSelectedPost(null)}
-                className="absolute top-5 right-5 p-3 rounded-full bg-zinc-950/80 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all duration-200"
+                className="absolute top-5 right-5 z-20 p-3 rounded-full bg-zinc-950/80 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800 transition-all duration-200 backdrop-blur-md shadow-lg"
                 aria-label="Close blog preview"
               >
-                ✕
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
 
-              <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 uppercase tracking-[0.3em] font-semibold">
-                  <span>{selectedPost.category}</span>
+              {/* Modal Cover Image */}
+              {selectedPost.image_url && (
+                <div className="relative w-full h-64 sm:h-80 lg:h-96 border-b border-zinc-800 bg-zinc-950 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10" />
+                  <img 
+                    src={selectedPost.image_url} 
+                    alt={selectedPost.title} 
+                    className="object-cover w-full h-full opacity-80" 
+                  />
+                </div>
+              )}
+
+              <div className={`p-8 space-y-6 ${!selectedPost.image_url ? 'pt-12' : ''}`}>
+                <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 uppercase tracking-[0.3em] font-semibold relative z-20">
+                  <span className="text-fuchsia-400 drop-shadow-[0_0_8px_rgba(232,121,249,0.3)]">{selectedPost.category}</span>
                   <span>•</span>
                   <span>{selectedPost.reading_time}</span>
                   <span>•</span>
                   <time>{selectedPost.date}</time>
                 </div>
-                <h3 className="text-3xl font-black text-zinc-50 tracking-tight">
+                
+                <h3 className="text-3xl md:text-4xl font-black text-zinc-50 tracking-tight leading-tight relative z-20">
                   {selectedPost.title}
                 </h3>
-                <p className="text-zinc-400 leading-relaxed text-sm max-w-2xl">
+                
+                <p className="text-zinc-300 leading-relaxed text-base md:text-lg max-w-3xl">
                   {selectedPost.excerpt}
                 </p>
-                <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-6 text-zinc-300 leading-7 text-sm shadow-inner shadow-black/20">
+                
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-6 md:p-8 text-zinc-300 leading-8 text-sm md:text-base shadow-inner shadow-black/20 whitespace-pre-wrap">
                   {selectedPost.content}
                 </div>
               </div>
