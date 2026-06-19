@@ -145,8 +145,7 @@ const SkillsBento = () => {
           Technical Toolkit
         </h2>
         <p className="text-zinc-400 max-w-xl text-sm mt-2 leading-relaxed">
-          A modular look at the compilation languages, multi-tier frameworks,
-          and verification testing tools I interact with daily.
+          A modular breakdown of the programming languages, full-stack frameworks, and development environments I interact with daily. Each card represents a foundational layer of my engineering toolkit.
         </p>
       </div>
 
