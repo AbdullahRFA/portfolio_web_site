@@ -10,7 +10,7 @@ import ProjectShowcase from "../components/ProjectShowcase";
 import SkillsBento from "../components/SkillsBento";
 import Link from "next/link";
 
-// FORCE NEXT.JS TO BYPASS BUILD-TIME CACHING AND LOOK UP FRESH DATA FROM SUPABASE ON EVERY REQUEST
+// Force Next.js to bypass build-time caching and look up fresh data from Supabase on every request
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -19,14 +19,12 @@ export default async function Home() {
   const [
     { data: projects },
     { data: blogs },
-    { data: skills },
     { data: certs },
     { data: experiences },
     { data: education }
   ] = await Promise.all([
     supabase.from('projects').select('*').order('created_at', { ascending: false }),
     supabase.from('blogs').select('*').order('created_at', { ascending: false }),
-    supabase.from('skills').select('*').order('created_at', { ascending: true }),
     supabase.from('certifications').select('*').order('created_at', { ascending: false }),
     supabase.from('experiences').select('*').order('created_at', { ascending: false }),
     supabase.from('education').select('*').order('created_at', { ascending: false }),
@@ -52,8 +50,9 @@ export default async function Home() {
         {/* Passing live Supabase data to other sections */}
         <ProjectShowcase projects={projects || []} />
 
+        {/* FIXED: Removed the dynamic 'skills' prop passing since SkillsBento manages its own high-fidelity static metrics data internally */}
         <div id="skills" className="scroll-mt-20">
-          <SkillsBento skills={skills || []} />
+          <SkillsBento />
         </div>
 
         <div id="certifications" className="scroll-mt-20">
@@ -72,7 +71,7 @@ export default async function Home() {
           <ContactForm />
         </div>
 
-        {/* Footer with Hidden Secret Admin Dashboard Entry Node */}
+        {/* Footer with Secret Admin Link */}
         <footer className="w-full py-10 text-center text-sm text-zinc-600 mt-20 border-t border-zinc-900/50">
           <p>
             © {new Date().getFullYear()} Abdullah Nazmus-Sakib. All rights reserved
