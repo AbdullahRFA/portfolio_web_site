@@ -42,8 +42,7 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
                 Licenses & Certifications
               </h2>
               <p className="max-w-2xl text-sm text-zinc-400 leading-relaxed mt-2">
-                Showcase your verified achievements in a compact, interactive
-                format. Tap any card to open the full certificate detail page.
+                A verified log of my professional certifications, specialized training programs, and industry credentials. These milestones reflect my ongoing commitment to mastering emerging technologies and engineering practices.
               </p>
             </div>
             <a
