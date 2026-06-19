@@ -10,9 +10,13 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
   const [isMounted, setIsMounted] = useState(false);
   const [showAllCertifications, setShowAllCertifications] = useState(false);
 
+  // --- Sorting Logic Added Here ---
+  // Sort the array based on the 'sort_order' field before slicing
+  const sortedCertifications = [...certifications].sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+
   const visibleCertifications = showAllCertifications
-    ? certifications
-    : certifications.slice(0, 3);
+    ? sortedCertifications
+    : sortedCertifications.slice(0, 3);
 
   // Ensure modal only renders after hydration completes
   useEffect(() => {
@@ -100,7 +104,7 @@ const CertificationShowcase = ({ certifications }: { certifications: any[] }) =>
           ))}
         </div>
 
-        {certifications.length > 3 && (
+        {sortedCertifications.length > 3 && (
           <div className="mt-8 flex justify-center">
             <button
               type="button"
