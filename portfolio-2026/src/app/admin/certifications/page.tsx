@@ -14,7 +14,8 @@ const initialForm = {
   credential_url: "", 
   platform: "", 
   photos: "", 
-  tags: "" 
+  tags: "",
+  sort_order: 0 // Added sort order
 };
 
 export default function AdminCertificationsPage() {
@@ -24,7 +25,9 @@ export default function AdminCertificationsPage() {
 
   const loadData = async () => {
     const data = await fetchTableData("certifications");
-    setCertifications(data);
+    // Sort data immediately after fetching
+    const sortedData = data.sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+    setCertifications(sortedData);
   };
 
   useEffect(() => { loadData(); }, []);
@@ -35,6 +38,7 @@ export default function AdminCertificationsPage() {
     // Parse comma-separated strings back into arrays for PostgreSQL TEXT[] columns
     const payload = { 
       ...form, 
+      sort_order: Number(form.sort_order),
       photos: typeof form.photos === 'string' 
         ? form.photos.split(',').map((p:string) => p.trim()).filter(Boolean) 
         : form.photos,
@@ -59,7 +63,8 @@ export default function AdminCertificationsPage() {
     setForm({ 
       ...cert, 
       photos: cert.photos ? cert.photos.join(', ') : "",
-      tags: cert.tags ? cert.tags.join(', ') : ""
+      tags: cert.tags ? cert.tags.join(', ') : "",
+      sort_order: cert.sort_order || 0
     });
     setEditingId(cert.id);
   };
@@ -71,11 +76,32 @@ export default function AdminCertificationsPage() {
     }
   };
 
+  // --- Quick Reorder Functionality ---
+  const handleMove = async (index: number, direction: "up" | "down") => {
+    if (direction === "up" && index === 0) return;
+    if (direction === "down" && index === certifications.length - 1) return;
+
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    const currentItem = certifications[index];
+    const targetItem = certifications[targetIndex];
+
+    try {
+      // Swap their sort_order values in the database
+      await updateRecord("certifications", currentItem.id, { sort_order: targetItem.sort_order || targetIndex });
+      await updateRecord("certifications", targetItem.id, { sort_order: currentItem.sort_order || index });
+      
+      // Reload the data to reflect changes
+      loadData();
+    } catch (err: any) {
+      alert("Failed to reorder: " + err.message);
+    }
+  };
+
   return (
     <div className="space-y-10">
       <div>
         <h1 className="text-3xl font-black text-zinc-50">Manage Certifications</h1>
-        <p className="text-sm text-zinc-400 mt-2">Update your verified achievements, professional licenses, and credentials.</p>
+        <p className="text-sm text-zinc-400 mt-2">Update and organize your verified achievements, professional licenses, and credentials.</p>
       </div>
 
       {/* Editor Form */}
@@ -114,12 +140,15 @@ export default function AdminCertificationsPage() {
             <input value={form.credential_url} onChange={e => setForm({...form, credential_url: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="https://..." />
           </div>
           
-          <div className="md:col-span-2">
+          <div>
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Tags (Comma Separated)</label>
             <input required value={form.tags} onChange={e => setForm({...form, tags: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="Core Engineering, SQA, Architecture" />
           </div>
+          <div>
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Display Order (Lower is First)</label>
+            <input type="number" required value={form.sort_order} onChange={e => setForm({...form, sort_order: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" />
+          </div>
 
-          {/* Replaced text input with ImageUploader */}
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Certification Image(s)</label>
             <ImageUploader 
@@ -148,6 +177,7 @@ export default function AdminCertificationsPage() {
         <table className="w-full text-left text-sm text-zinc-400">
           <thead className="bg-zinc-900 text-zinc-100 font-bold uppercase tracking-wider text-[10px]">
             <tr>
+              <th className="px-6 py-4 w-16 text-center">Order</th>
               <th className="px-6 py-4">Title</th>
               <th className="px-6 py-4">Issuer</th>
               <th className="px-6 py-4">Date</th>
@@ -155,8 +185,15 @@ export default function AdminCertificationsPage() {
             </tr>
           </thead>
           <tbody className="bg-zinc-950 divide-y divide-zinc-800/60">
-            {certifications.map((cert) => (
+            {certifications.map((cert, index) => (
               <tr key={cert.id} className="hover:bg-zinc-900/40 transition-colors">
+                <td className="px-6 py-4 font-mono text-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <button onClick={() => handleMove(index, "up")} disabled={index === 0} className={`text-zinc-500 hover:text-emerald-400 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors`}>▲</button>
+                    <span className="text-zinc-300">{cert.sort_order || 0}</span>
+                    <button onClick={() => handleMove(index, "down")} disabled={index === certifications.length - 1} className={`text-zinc-500 hover:text-emerald-400 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors`}>▼</button>
+                  </div>
+                </td>
                 <td className="px-6 py-4 font-bold text-zinc-200">{cert.title}</td>
                 <td className="px-6 py-4">
                   <span className="px-2 py-1 bg-zinc-800 text-zinc-300 rounded-md text-[10px] uppercase font-black tracking-widest">{cert.issuer}</span>
