@@ -4,12 +4,22 @@ import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useState } from "react";
 import { IProjectCaseStudy } from "../types/project";
 
+// Extended interface mapping the Supabase relational schema fields to avoid type validation errors
+interface SupabaseProjectCaseStudy extends IProjectCaseStudy {
+  image_url?: string;
+  long_description?: string;
+  tech_stack?: string[];
+  live_url?: string;
+  github_url?: string;
+  sort_order?: number;
+}
+
 export default function ProjectShowcase({ projects }: { projects: any[] }) {
   // Configured filters tracking your verified portfolio disciplines
   const [filter, setFilter] = useState<
     "All" | "Web Architecture" | "Mobile Apps" | "AI/ML & IoT"
   >("All");
-  const [selectedProject, setSelectedProject] = useState<IProjectCaseStudy | null>(null);
+  const [selectedProject, setSelectedProject] = useState<SupabaseProjectCaseStudy | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
 
   const projectsToShow = 6;
@@ -137,7 +147,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
               }}
               key={project.id}
               onClick={() => setSelectedProject(project)}
-              className="group relative p-6 rounded-2xl border border-zinc-800 bg-linear-to-b from-zinc-900 to-zinc-950 shadow-xl hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] hover:border-cyan-500/30 transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
+              className="group relative p-6 rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 shadow-xl hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] hover:border-cyan-500/30 transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
             >
               {/* Dynamic Neon Corner Radial Glow Effect on Hover */}
               <div className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -175,7 +185,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold mb-2 text-zinc-100 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300 tracking-tight">
+                <h3 className="text-xl font-bold mb-2 text-zinc-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300 tracking-tight">
                   {project.title}
                 </h3>
                 <p className="text-sm text-zinc-400 mb-6 line-clamp-2 leading-relaxed font-normal">
@@ -197,7 +207,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
             </motion.div>
           ))}
         </AnimatePresence>
-      </motion.div>
+      </div>
 
       {filteredProjects.length > projectsToShow && (
         <div className="mt-8 flex justify-center">
@@ -242,7 +252,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
               className="relative w-full max-w-3xl overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 shadow-[0_0_50px_rgba(6,182,212,0.25)] z-50 my-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="absolute top-0 left-0 right-0 h-0.5 z-10 bg-linear-to-r from-cyan-400 via-blue-500 to-fuchsia-500" />
+              <div className="absolute top-0 left-0 right-0 h-0.5 z-10 bg-gradient-to-r from-cyan-400 via-blue-500 to-fuchsia-500" />
 
               <button
                 onClick={() => setSelectedProject(null)}
@@ -327,7 +337,7 @@ export default function ProjectShowcase({ projects }: { projects: any[] }) {
                         href={selectedProject.github_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-2.5 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-xs font-bold shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all flex items-center gap-2 transform hover:-translate-y-0.5 duration-200"
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-xs font-bold shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all flex items-center gap-2 transform hover:-translate-y-0.5 duration-200"
                       >
                         Source Code
                       </a>
