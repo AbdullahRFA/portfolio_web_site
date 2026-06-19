@@ -9,7 +9,8 @@ const initialForm = {
   location: "", 
   period: "", 
   description: "", 
-  tags: "" 
+  tags: "",
+  sort_order: 0 // Added sort order
 };
 
 export default function AdminExperiencesPage() {
@@ -19,7 +20,9 @@ export default function AdminExperiencesPage() {
 
   const loadData = async () => {
     const data = await fetchTableData("experiences");
-    setExperiences(data);
+    // Sort the data by sort_order ascending immediately after fetching
+    const sortedData = data.sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+    setExperiences(sortedData);
   };
 
   useEffect(() => { loadData(); }, []);
@@ -28,8 +31,10 @@ export default function AdminExperiencesPage() {
     e.preventDefault();
     
     // Parse description (newline separated) and tags (comma separated) into arrays for Supabase
+    // Also ensure sort_order is explicitly converted to a Number
     const payload = { 
       ...form, 
+      sort_order: Number(form.sort_order),
       description: typeof form.description === 'string' 
         ? form.description.split('\n').map((d:string)=>d.trim()).filter(Boolean) 
         : form.description,
@@ -55,7 +60,8 @@ export default function AdminExperiencesPage() {
       ...exp, 
       // Convert arrays back to strings for the input fields
       description: exp.description ? exp.description.join('\n') : "",
-      tags: exp.tags ? exp.tags.join(', ') : ""
+      tags: exp.tags ? exp.tags.join(', ') : "",
+      sort_order: exp.sort_order || 0
     });
     setEditingId(exp.id);
   };
@@ -64,6 +70,27 @@ export default function AdminExperiencesPage() {
     if(confirm("Are you sure you want to delete this experience record?")) {
       await deleteRecord("experiences", id);
       loadData();
+    }
+  };
+
+  // --- Quick Reorder Functionality ---
+  const handleMove = async (index: number, direction: "up" | "down") => {
+    if (direction === "up" && index === 0) return;
+    if (direction === "down" && index === experiences.length - 1) return;
+
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    const currentItem = experiences[index];
+    const targetItem = experiences[targetIndex];
+
+    try {
+      // Swap their sort_order values in the database
+      await updateRecord("experiences", currentItem.id, { sort_order: targetItem.sort_order || targetIndex });
+      await updateRecord("experiences", targetItem.id, { sort_order: currentItem.sort_order || index });
+      
+      // Reload the data to reflect changes
+      loadData();
+    } catch (err: any) {
+      alert("Failed to reorder: " + err.message);
     }
   };
 
@@ -94,6 +121,10 @@ export default function AdminExperiencesPage() {
             <input required value={form.period} onChange={e => setForm({...form, period: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="e.g., May 2026 - Present" />
           </div>
           <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Display Order (Lower is First)</label>
+            <input type="number" required value={form.sort_order} onChange={e => setForm({...form, sort_order: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" />
+          </div>
+          <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Description (One bullet point per line)</label>
             <textarea rows={4} required value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full mt-1 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-100 outline-none focus:border-cyan-500" placeholder="Developed production-ready systems...&#10;Gained hands-on expertise..." />
           </div>
@@ -120,6 +151,7 @@ export default function AdminExperiencesPage() {
         <table className="w-full text-left text-sm text-zinc-400">
           <thead className="bg-zinc-900 text-zinc-100 font-bold uppercase tracking-wider text-[10px]">
             <tr>
+              <th className="px-6 py-4 w-16 text-center">Order</th>
               <th className="px-6 py-4">Role</th>
               <th className="px-6 py-4">Company</th>
               <th className="px-6 py-4">Period</th>
@@ -127,8 +159,15 @@ export default function AdminExperiencesPage() {
             </tr>
           </thead>
           <tbody className="bg-zinc-950 divide-y divide-zinc-800/60">
-            {experiences.map((exp) => (
+            {experiences.map((exp, index) => (
               <tr key={exp.id} className="hover:bg-zinc-900/40 transition-colors">
+                <td className="px-6 py-4 font-mono text-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <button onClick={() => handleMove(index, "up")} disabled={index === 0} className={`text-zinc-500 hover:text-cyan-400 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors`}>▲</button>
+                    <span className="text-zinc-300">{exp.sort_order || 0}</span>
+                    <button onClick={() => handleMove(index, "down")} disabled={index === experiences.length - 1} className={`text-zinc-500 hover:text-cyan-400 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors`}>▼</button>
+                  </div>
+                </td>
                 <td className="px-6 py-4 font-bold text-zinc-200">{exp.role}</td>
                 <td className="px-6 py-4">{exp.company}</td>
                 <td className="px-6 py-4">

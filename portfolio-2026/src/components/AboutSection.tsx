@@ -35,8 +35,14 @@ export default function AboutSection({ experiences = [], education = [] }: About
   const [expandedExp, setExpandedExp] = useState(false);
   const [expandedEdu, setExpandedEdu] = useState(false);
 
+  // --- Sorting Logic Added Here ---
+  // Sort the arrays based on the 'sort_order' field before slicing or mapping
+  const sortedExperiences = [...experiences].sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+  const sortedEducation = [...education].sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
+
   const ITEMS_TO_SHOW = 2;
-  const visibleExpItems = expandedExp ? experiences : experiences.slice(0, ITEMS_TO_SHOW);
+  // Use the sorted array for the slicing logic
+  const visibleExpItems = expandedExp ? sortedExperiences : sortedExperiences.slice(0, ITEMS_TO_SHOW);
 
   return (
     <section id="about" className="relative py-24 border-t border-zinc-900 overflow-hidden">
@@ -124,7 +130,7 @@ export default function AboutSection({ experiences = [], education = [] }: About
                   <Timeline items={visibleExpItems} />
                 </motion.div>
 
-                {experiences.length > ITEMS_TO_SHOW && (
+                {sortedExperiences.length > ITEMS_TO_SHOW && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }} className="flex justify-center pt-4">
                     <motion.button
                       onClick={() => setExpandedExp(!expandedExp)}
@@ -148,7 +154,8 @@ export default function AboutSection({ experiences = [], education = [] }: About
               <motion.div key="education" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} className="space-y-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ staggerChildren: 0.12, delayChildren: 0.1 }} className="bg-zinc-900/40 p-2 md:p-6 rounded-3xl border border-zinc-800/80 shadow-2xl backdrop-blur-md space-y-4">
                   <AnimatePresence mode="sync">
-                    {education.slice(0, expandedEdu ? education.length : 1).map((item: any, idx: number) => (
+                    {/* Changed education to sortedEducation here */}
+                    {sortedEducation.slice(0, expandedEdu ? sortedEducation.length : 1).map((item: any, idx: number) => (
                       <motion.article
                         key={item.id || `edu-${idx}`}
                         initial={{ opacity: 0, y: 15, scale: 0.95 }}
@@ -195,7 +202,8 @@ export default function AboutSection({ experiences = [], education = [] }: About
                   </AnimatePresence>
                 </motion.div>
 
-                {education.length > 1 && (
+                {/* Changed education.length to sortedEducation.length here */}
+                {sortedEducation.length > 1 && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }} className="flex justify-center pt-4">
                     <motion.button
                       onClick={() => setExpandedEdu(!expandedEdu)}
