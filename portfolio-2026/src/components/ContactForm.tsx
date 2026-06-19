@@ -71,9 +71,7 @@ const ContactForm = () => {
             </h2>
           </div>
           <p className="text-zinc-400 text-sm leading-relaxed font-normal">
-            Have an open opportunity, a project proposal, or just want to say
-            hi? Drop a message, and it will sync instantly with my admin
-            database dashboard pipeline.
+            Have an upcoming project, an open opportunity, or a collaborative idea? Drop a message below to establish a direct connection with my engineering pipeline.
           </p>
           <div className="space-y-2.5 pt-4 border-t border-zinc-900 text-sm text-zinc-400 font-medium">
             <div className="flex items-center gap-3 group">
