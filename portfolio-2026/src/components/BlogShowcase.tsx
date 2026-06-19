@@ -4,9 +4,16 @@ import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IBlogPost } from "../types/blog";
 
+// Extended interface mapping the Supabase relational fields to avoid build compilation errors
+interface SupabaseBlogPost extends IBlogPost {
+  image_url?: string;
+  reading_time?: string;
+  sort_order?: number;
+}
+
 export default function BlogShowcase({ blogs }: { blogs: any[] }) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [selectedPost, setSelectedPost] = useState<IBlogPost | null>(null);
+  const [selectedPost, setSelectedPost] = useState<SupabaseBlogPost | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [showAllPosts, setShowAllPosts] = useState(false);
   const POSTS_PREVIEW_COUNT = 4;
@@ -16,7 +23,7 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
     setIsMounted(true);
   }, []);
 
-  // --- Sorting Logic Added Here ---
+  // --- Sorting Logic ---
   // Sort the array based on the 'sort_order' field before filtering or slicing
   const sortedBlogs = [...blogs].sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
 
@@ -150,7 +157,7 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
                 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => setSelectedPost(post)}
-                className="group relative flex flex-col md:flex-row gap-6 items-start md:items-center p-6 rounded-2xl border border-zinc-800 bg-linear-to-b from-zinc-900 to-zinc-950 shadow-xl hover:shadow-[0_0_25px_rgba(232,121,249,0.05)] hover:border-fuchsia-500/20 transition-all duration-300 cursor-pointer overflow-hidden"
+                className="group relative flex flex-col md:flex-row gap-6 items-start md:items-center p-6 rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 shadow-xl hover:shadow-[0_0_25px_rgba(232,121,249,0.05)] hover:border-fuchsia-500/20 transition-all duration-300 cursor-pointer overflow-hidden"
               >
                 <div className="absolute -top-12 -left-12 h-24 w-24 rounded-full bg-fuchsia-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -169,14 +176,14 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
                   <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-zinc-500 mb-3">
                     <time className="tabular-nums">{post.date}</time>
                     <span>•</span>
-                    <span>{post.reading_time}</span>
+                    <span>{post.reading_time || post.readingTime}</span>
                     <span>•</span>
                     <span className="px-2.5 py-0.5 rounded-md bg-zinc-950 text-zinc-400 text-[10px] uppercase tracking-widest font-black border border-zinc-800 group-hover:border-fuchsia-500/20 group-hover:text-fuchsia-400 transition-colors duration-300 shadow-inner">
                       {post.category}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-zinc-100 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-fuchsia-400 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300 mb-2 tracking-tight">
+                  <h3 className="text-xl font-bold text-zinc-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-fuchsia-400 group-hover:to-cyan-400 group-hover:bg-clip-text transition-all duration-300 mb-2 tracking-tight">
                     {post.title}
                   </h3>
 
@@ -266,7 +273,7 @@ export default function BlogShowcase({ blogs }: { blogs: any[] }) {
                 <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 uppercase tracking-[0.3em] font-semibold relative z-20">
                   <span className="text-fuchsia-400 drop-shadow-[0_0_8px_rgba(232,121,249,0.3)]">{selectedPost.category}</span>
                   <span>•</span>
-                  <span>{selectedPost.reading_time}</span>
+                  <span>{selectedPost.reading_time || selectedPost.readingTime}</span>
                   <span>•</span>
                   <time>{selectedPost.date}</time>
                 </div>
