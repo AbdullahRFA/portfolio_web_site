@@ -4,6 +4,7 @@ import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
+import VisitorCounter from "./VisitorCounter";
 
 const Hero = () => {
   const el = useRef<HTMLSpanElement>(null);
@@ -138,16 +139,22 @@ const Hero = () => {
           animate="visible"
           className="lg:col-span-7 space-y-6 z-10"
         >
-          {/* Active Engineering Status Badge with Cyan Border Highlight */}
+          {/* Top Telemetry Row: Status Badge & Live Visitor Counter */}
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 text-xs font-semibold tracking-wide w-fit shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+            className="flex flex-wrap items-center gap-4"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-            </span>{" "}
-            Available for Software Engineering Internships
+            {/* Active Engineering Status Badge with Cyan Border Highlight */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 text-xs font-semibold tracking-wide shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>{" "}
+              Available for Software Engineering Internships
+            </div>
+
+            {/* Live Visitor Counter Component */}
+            <VisitorCounter />
           </motion.div>
 
           {/* Core Introduction Headline */}
@@ -174,7 +181,7 @@ const Hero = () => {
             />
           </motion.div>
 
-          {/* FIXED: Shifted text styling to use premium typography alignments with isolated cyberpunk color gradients */}
+          {/* Typography configuration alignment */}
           <motion.p
             variants={itemVariants}
             className="text-base text-zinc-300 font-normal leading-relaxed max-w-2xl"
@@ -385,10 +392,9 @@ const Hero = () => {
 
           {/* Badge 4: SQA for Manual and Automated Testing */}
           <motion.div
-            variants={floatAnimation(2.4)} // Updated: Staggered animation delay
+            variants={floatAnimation(2.4)}
             initial="initial"
             animate="animate"
-            // Updated: Moved to top-right to balance layout and prevent overlap
             className="absolute top-12 right-4 lg:-right-19 z-25 bg-zinc-900/90 backdrop-blur-md border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)] p-3 rounded-2xl flex items-center gap-2.5 hover:scale-105 transition-transform"
           >
             <div className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]" />
