@@ -74,7 +74,13 @@ export default async function Home() {
         {/* Footer with Secret Admin Link */}
         <footer className="w-full py-10 text-center text-sm text-zinc-600 mt-20 border-t border-zinc-900/50">
           <p>
-            © {new Date().getFullYear()} Abdullah Nazmus-Sakib. All rights reserved
+            © {new Date().getFullYear()} <span> </span>
+
+              <span className="font-bold text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-fuchsia-400 bg-clip-text drop-shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+              Abdullah Nazmus-Sakib, CSE, JU.
+            </span>
+            <span> </span> 
+             All rights reserved
             <Link 
               href="/admin/login" 
               className="cursor-default text-zinc-600 hover:text-zinc-600 outline-none select-none"

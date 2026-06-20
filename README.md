@@ -170,24 +170,25 @@ Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:30
 
 ## 📸 Screenshots
 
-### Desktop Main Landing Interface
+## 📸 Screenshots
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│ [🚀 Hero Section Introduction]                                         │
-├────────────────────────────────────────────────────────────────────────┤
-│ [📁 Featured Projects Grid: Filter Bars | Custom Modals]              │
-├────────────────────────────────────────────────────────────────────────┤
-│ [🛠️ Technical Capabilities: Responsive Bento Masonry Cards]            │
-├────────────────────────────────────────────────────────────────────────┤
-│ [📝 Technical Insights Stream: Article Modals]                         │
-├────────────────────────────────────────────────────────────────────────┤
-│ [✍️ Public Guestbook Wall Ledger]                                      │
-├────────────────────────────────────────────────────────────────────────┤
-│ [📧 Contact Transmission Module Form]                                  │
-└────────────────────────────────────────────────────────────────────────┘
+| Home | About | 
+|:---:|:---:|
+| <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 9.37.53 AM.png" width="400"> | <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.43.58 PM.png" width="400"> |
 
-```
+| Projects | Skills | 
+|:---:|:---:|
+| <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.44.27 PM.png" width="400"> | <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.44.52 PM.png" width="400"> |
+
+| Certifications | Blogs | 
+|:---:|:---:|
+| <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.45.16 PM.png" width="400"> | <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.45.36 PM.png" width="400"> |
+
+| Guestbooks & Contact| 
+|:---:|
+| <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.46.14 PM.png" width="520"> | <img src="portfolio-2026/public/Screenshots/Screenshot 2026-06-20 at 5.45.36 PM.png" width="400"> |
+
+
 
 ---
 
